@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Testing Repo
-
 public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
@@ -16,13 +14,16 @@ public class GameController : MonoBehaviour {
 	public TextMesh scoreText;			// Text mesh on the score ball
 	public TextMesh timerText;			// Text mesh on the timer ball
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
+	public int healthStart;				// The starting health for each level
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
 	[Tooltip("The max combo multiplier achievable for the player")]
 	public int maxCombo;				// The max combo multiplier possible
 	[Tooltip("The maximum speed bonus multiplayer. It degrades per second, until it is 1x")]
-	public int maxSpeedBonus;			
+	public int maxSpeedBonus;		
+	[Tooltip("The max range of numbers that are chosen for the problem increases by this much every level up past level 4")]
+	public int problemValueRaise;	
 
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
@@ -39,6 +40,7 @@ public class GameController : MonoBehaviour {
 	private int level;					// Keeps track of the level
 	private LevelController lc;			// Used to call the LevelController script
 	private int levelProgressClicks;	// Used to keep track of how many clicks have been correct on current level
+	private int health;					// Used to keep track of current health
 
 	void Start () 
 	{
@@ -55,6 +57,7 @@ public class GameController : MonoBehaviour {
 		ResetScore();			// Sets score to 0
 		ResetProgress ();		// Sets correct progress clicks to 0 
 		ResetCombo();			// Sets the starting combo to 1x
+		ResetHealth();
 
 		timer = timerValue;		// Sets the timer to its starting value
 
@@ -204,18 +207,31 @@ public class GameController : MonoBehaviour {
 		if (levelProgressClicks == totalLevelProgressClicks) // Level up
 		{
 			ResetProgress ();
+			ResetHealth ();		// Sets health back to starting value
+
 			level++;
-			lc.SetLevel (level);
+
+			// If we have leveled past the first 4, the max range of the generated numbers is increased and a random level is picked, 
+			// this is the game loop from this point on
+			if (level > 4)
+			{
+				lc.RaiseMaxProblemValues (problemValueRaise);
+				lc.SetLevel(Random.Range( 1, 4 ));
+			}
+			else
+			{
+				lc.SetLevel (level);
+			}
 
 			bonusTime += timer; // Any remaining time is added to the bonus time
 			timer = timerValue;	// Main timer is reset
 		}
 
 		// Temporary end state until we figure out total levels or level loops
-		if (level > 5)
-		{
-			gameOver = true;
-		}
+//		if (level > 4)
+//		{
+//			gameOver = true;
+//		}
 	}
 		
 
@@ -270,4 +286,28 @@ public class GameController : MonoBehaviour {
 		//Debug.Log ("Timer Combo x" + scoreSpeedBonus);
 	}
 
+
+	// Public function called by the incorrect mathball when clicked
+	// Reduces health variable by 1 and if health reaches 0, it deletes the balls and causes a game over
+	public void LoseHealth()
+	{
+		health -= 1;
+
+		Debug.Log ("Health: " + health);
+
+		if (health == 0) {
+			gameOver = true;
+			ResetBallz ();
+		}
+	}
+
+
+	// Resets health variable back to the starting value
+	// Called in start() and during level ups
+	public void ResetHealth()
+	{
+		health = healthStart;
+
+		Debug.Log ("Health: " + health);
+	}
 }

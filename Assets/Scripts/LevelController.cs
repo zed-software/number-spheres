@@ -10,6 +10,7 @@ public class LevelController : MonoBehaviour {
 	private GameController gc;			// Connects to the GameController script
 	private int level;					// Used to generate a problem based on this variable
 	private Vector2 answerRange;		// Vector 2 that will hold the range of possible answers for each level
+	private int min = 2, max = 12; 		// The minimum and mazimum values for the problem variables
 
 
 
@@ -42,8 +43,8 @@ public class LevelController : MonoBehaviour {
 	{
 		allValues = new int[length];
 		answerValue = 0;
-		int min = 1, max = 10; // The minimum and mazimum values for the problem variables
-		int num1 = 0, num2 = 0, num3 = 0; // Set to 0 to aviod some error
+//		int min = 1, max = 10; // The minimum and mazimum values for the problem variables
+		int num1 = 0, num2 = 0;// num3 = 0; // Set to 0 to aviod some error
 
 		// Switch statement for the different level problem generations
 		// Each case loops until the problems answer isn't 0
@@ -81,46 +82,64 @@ public class LevelController : MonoBehaviour {
 			}
 			case 3: // Multiplication
 			{
+				int maxMultiply = 15;
+
+				if ( max < maxMultiply ) 
+					maxMultiply = max ;
+
 				while (answerValue == 0)
 				{	
-					num1 = Random.Range (min, max);
-					num2 = Random.Range (min, max);
+					num1 = Random.Range (min, maxMultiply);
+					num2 = Random.Range (min, maxMultiply);
 
 					answerValue = num1 * num2;
-					answerRange = new Vector2 ((min * min), (max * max));
+					answerRange = new Vector2 ((min * min), (maxMultiply * maxMultiply));
 					gc.UpdateProblem (num1 + " * " + num2 + " = ?");
 				}
 
 				break;
 			}
-			case 4: // Addition and subtraction
+			case 4: // Division
 			{
 				while (answerValue == 0)
 				{	
-					num1 = Random.Range (min, max);
-					num2 = Random.Range (min, max);
-					num3 = Random.Range (min, max);
+					num1 = Random.Range (min, max); // This number will be used as the answer
+					num2 = Random.Range (min, max);	// This will be used as the denominator
 
-					answerValue = num1 + num2 - num3;
-					answerRange = new Vector2 ((min + min - max), (max + max - min));
-					gc.UpdateProblem (num1 + " + " + num2 + " - " + num3 + " = ?");
+					int multipliedVariable = num1 * num2; // Multiplies the 2 randomly generated numbers, this will be used as the numerator
+
+					answerValue = num1;
+					answerRange = new Vector2 (min, max);
+					gc.UpdateProblem (multipliedVariable + " / " + num2 + " = ?");
+
+					// Addition and subtraction code
+//					num1 = Random.Range (min, max);
+//					num2 = Random.Range (min, max);
+//					num3 = Random.Range (min, max);
+//
+//					answerValue = num1 + num2 - num3;
+//					answerRange = new Vector2 ((min + min - max), (max + max - min));
+//					gc.UpdateProblem (num1 + " + " + num2 + " - " + num3 + " = ?");
 				}
 				break;
 			}
-			case 5: // Addition and multiplication
-			{
-				while (answerValue == 0)
-				{	
-					num1 = Random.Range (min, max);
-					num2 = Random.Range (min, max);
-					num3 = Random.Range (min, max);
-
-					answerValue = num1 + num2 * num3;
-					answerRange = new Vector2 ((min + min * min), (max + max * max));
-					gc.UpdateProblem (num1 + " + " + num2 + " * " + num3 + " = ?");
-				}
-				break;
-			}
+//			case 5: // ALL
+//			{
+//				while (answerValue == 0)
+//				{	
+//
+//
+//					// Addition and multiplication code
+////					num1 = Random.Range (min, max);
+////					num2 = Random.Range (min, max);
+////					num3 = Random.Range (min, max);
+////
+////					answerValue = num1 + num2 * num3;
+////					answerRange = new Vector2 ((min + min * min), (max + max * max));
+////					gc.UpdateProblem (num1 + " + " + num2 + " * " + num3 + " = ?");
+//				}
+//				break;
+//			}
 		}
 
 		allValues [0] = answerValue; // Sets the first value of the array to the correct answer generated here
@@ -189,5 +208,13 @@ public class LevelController : MonoBehaviour {
 		}
 
 		return allValues;
+	}
+
+
+	// Public function called by the GameController when there is a level up past level 4
+	// Raises the maximum range of values generated for the problem and answers
+	public void RaiseMaxProblemValues(int raise)
+	{
+		max += raise;
 	}
 }

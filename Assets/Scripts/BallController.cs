@@ -96,6 +96,7 @@ public class BallController : MonoBehaviour {
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
 //			gc.AddScore (-score);		// If incorrect the score goes down by this value
 			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
+			gc.LoseHealth();
 		}
 	}
 		

@@ -299,9 +299,11 @@ MonoBehaviour:
   scoreText: {fileID: 780249691}
   timerText: {fileID: 234356396}
   timerValue: 20
-  totalLevelProgressClicks: 7
+  healthStart: 3
+  totalLevelProgressClicks: 5
   maxCombo: 5
   maxSpeedBonus: 5
+  problemValueRaise: 5
 --- !u!4 &254029166
 Transform:
   m_ObjectHideFlags: 0
