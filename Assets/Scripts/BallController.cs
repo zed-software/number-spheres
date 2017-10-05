@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour {
 
 	public int speed; 							// Speed of ballz
 	public GameObject explosion;				// The explosion prefab goes here
+	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
@@ -82,10 +83,11 @@ public class BallController : MonoBehaviour {
 	// Input detection for if the ballz' collider has been clicked on
 	void OnMouseDown()
 	{
-		Instantiate (explosion, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
+		//moved the instantiate call to within the if statement to have seperate effects for right/wrong answers
 
 		if (isCorrect == 1) // If its the correct ball
 		{
+			Instantiate (explosion, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
 			gc.AddProgress();		// Counts up how many times a correct ball has been clicked, called before the score is added so the speedbonus can be calculated
  			gc.AddScore (score); 	// The score value is multiplied by the combo and speed here
 			gc.AddCombo ();			// Counts up the amount of correct balls clicked in a row, called afer the score is added so the new multiplier isn't factored in
@@ -93,6 +95,7 @@ public class BallController : MonoBehaviour {
 		}
 		else
 		{
+			Instantiate (explosion_incorrect, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
 //			gc.AddScore (-score);		// If incorrect the score goes down by this value
 			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
