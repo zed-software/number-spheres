@@ -292,7 +292,7 @@ MonoBehaviour:
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
-  spawnValue: {x: 3.7, y: 7.4}
+  spawnValue: {x: 4.3, y: 7.4}
   problemText: {fileID: 587574517}
   comboText: {fileID: 1199849537}
   bonusTimeText: {fileID: 1181244892}
@@ -986,7 +986,7 @@ Transform:
   m_GameObject: {fileID: 1104097158}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.001, y: 0, z: 10}
-  m_LocalScale: {x: 16, y: 9, z: 1}
+  m_LocalScale: {x: 18, y: 10.115, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1331,6 +1331,7 @@ GameObject:
   - component: {fileID: 1362777219}
   - component: {fileID: 1362777218}
   - component: {fileID: 1362777217}
+  - component: {fileID: 1362777222}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1408,6 +1409,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1362777222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1362777216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58bfe07ed2d63c4bba80471c7b9dc92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436964250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,7 +1443,7 @@ Transform:
   m_GameObject: {fileID: 1436964250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.7, y: 8.4, z: 1}
+  m_LocalScale: {x: 5.3, y: 8.4, z: 1}
   m_Children:
   - {fileID: 806860205}
   - {fileID: 1476010061}

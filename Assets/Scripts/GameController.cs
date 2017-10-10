@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
 		bonusTime = 0;
 
 		// Set to first level
-		level = 1;				
+		level = 4;				
 		lc = GetComponent<LevelController> ();
 		lc.SetLevel (level);	
 
