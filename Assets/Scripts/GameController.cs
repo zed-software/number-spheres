@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
 		bonusTime = 0;
 
 		// Set to first level
-		level = 4;				
+		level = 1;				
 		lc = GetComponent<LevelController> ();
 		lc.SetLevel (level);	
 
@@ -63,29 +63,30 @@ public class GameController : MonoBehaviour {
 
 	}
 
-
 	// Update is called once per frame
 	void Update () 
 	{
+//		// If the game is over, the user taps to reload the scene
+//		if (gameOver) {
+////			if (Input.GetKeyDown (KeyCode.R)) {
+//			for (int i = 0; i < Input.touchCount; ++i) 
+//			{
+//				if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
+//				{
+//					SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+//				}
+//			}
+//		}
 
-		// If the game is over, the user press R to reload the scene
-		if (gameOver) {
-			if (Input.GetKeyDown (KeyCode.R)) {
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-			}
-		}
 
 		// If there is still time left, and if the user hasn't beaten the final level, the game checks if there are any ballz in the game and then spawns them
 		if (timer > 0 && !gameOver) {
 
 			// If there is bonus time available, the bonus time counts down instead
-			if (bonusTime > 0)
-			{
+			if (bonusTime > 0) {
 				bonusTime -= Time.deltaTime;
 				bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString () + "!");
-			} else // No bonus time means the main timer counts down
-			{
+			} else { // No bonus time means the main timer counts down
 				timer -= Time.deltaTime;
 				bonusTimeText.text = ("");
 			}
@@ -97,10 +98,12 @@ public class GameController : MonoBehaviour {
 				SpawnBallz ();
 			}
 		} else { // If the timer runs out or the game is over
-			gameOver = true;
-			SetGameOverText ();	// Sets the problem text to game over and reset instruction text
-			ResetBallz ();	// Deletes any remaining ballz
+//			gameOver = true;
+			GameOver();
+//			SetGameOverText ();	// Sets the problem text to game over and reset instruction text
+//			ResetBallz ();	// Deletes any remaining ballz
 		}
+
 	}
 
 
@@ -245,7 +248,7 @@ public class GameController : MonoBehaviour {
 	// Function used to give player reset instructions once a game over is triggered
 	void SetGameOverText()
 	{
-		problemText.text = ("Game Over: Press R to restart");
+		problemText.text = ("Game Over: Tap Screen to Restart");
 	}
 		
 	// Public function called by a correct mathball when clicked, adds to the combo bonus until it hits the max
@@ -296,18 +299,40 @@ public class GameController : MonoBehaviour {
 		Debug.Log ("Health: " + health);
 
 		if (health == 0) {
-			gameOver = true;
-			ResetBallz ();
+			GameOver ();
+//			gameOver = true;
+//			ResetBallz ();
 		}
 	}
 
 
 	// Resets health variable back to the starting value
 	// Called in start() and during level ups
-	public void ResetHealth()
+	void ResetHealth()
 	{
 		health = healthStart;
 
 		Debug.Log ("Health: " + health);
+	}
+
+
+	// Called when the timer or health hits 0
+	// Deletes ballz on screen then waits for a second before loading the game over screen with the user's score
+	void GameOver()
+	{
+		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
+		ResetBallz();		
+
+		PlayerPrefs.SetString ("Score", Mathf.Round(score).ToString()); // Saves the score to a settings file for the game
+
+		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no wait makes the transition too abrupt
+	}
+
+	// Waits a little after hitting game over state then loads the game over scene
+	IEnumerator WaitForGameOver()
+	{
+		yield return new WaitForSeconds (1);
+		SceneManager.LoadScene (2);
+
 	}
 }

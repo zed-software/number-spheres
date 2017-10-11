@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour {
 	private GameController gc;			// Connects to the GameController script
 	private int level;					// Used to generate a problem based on this variable
 	private Vector2 answerRange;		// Vector 2 that will hold the range of possible answers for each level
-	private int min = 2, max = 12; 		// The minimum and mazimum values for the problem variables
+	private int min = 2, max = 10; 		// The minimum and mazimum values for the problem variables
 
 
 
@@ -61,7 +61,7 @@ public class LevelController : MonoBehaviour {
 		
 					answerValue = num1 + num2;
 					answerRange = new Vector2 ((min + min), (max + max));
-					gc.UpdateProblem (num1 + " + " + num2 + " = ?");
+					gc.UpdateProblem (num1 + " + " + num2 + " =");
 				}
 
 				break;
@@ -75,7 +75,7 @@ public class LevelController : MonoBehaviour {
 
 					answerValue = num1 - num2;
 					answerRange = new Vector2 ((min - max), (max - min));
-					gc.UpdateProblem (num1 + " - " + num2 + " = ?");
+					gc.UpdateProblem (num1 + " - " + num2 + " =");
 				}
 
 				break;
@@ -94,7 +94,7 @@ public class LevelController : MonoBehaviour {
 
 					answerValue = num1 * num2;
 					answerRange = new Vector2 ((min * min), (maxMultiply * maxMultiply));
-					gc.UpdateProblem (num1 + " * " + num2 + " = ?");
+					gc.UpdateProblem (num1 + " * " + num2 + " =");
 				}
 
 				break;
@@ -110,7 +110,7 @@ public class LevelController : MonoBehaviour {
 
 					answerValue = num1;
 					answerRange = new Vector2 (min, max);
-					gc.UpdateProblem (multipliedVariable + " / " + num2 + " = ?");
+					gc.UpdateProblem (multipliedVariable + " / " + num2 + " =");
 
 					// Addition and subtraction code
 //					num1 = Random.Range (min, max);
@@ -119,7 +119,7 @@ public class LevelController : MonoBehaviour {
 //
 //					answerValue = num1 + num2 - num3;
 //					answerRange = new Vector2 ((min + min - max), (max + max - min));
-//					gc.UpdateProblem (num1 + " + " + num2 + " - " + num3 + " = ?");
+//					gc.UpdateProblem (num1 + " + " + num2 + " - " + num3 + " =");
 				}
 				break;
 			}
@@ -136,7 +136,7 @@ public class LevelController : MonoBehaviour {
 ////
 ////					answerValue = num1 + num2 * num3;
 ////					answerRange = new Vector2 ((min + min * min), (max + max * max));
-////					gc.UpdateProblem (num1 + " + " + num2 + " * " + num3 + " = ?");
+////					gc.UpdateProblem (num1 + " + " + num2 + " * " + num3 + " =");
 //				}
 //				break;
 //			}

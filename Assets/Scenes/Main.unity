@@ -291,8 +291,7 @@ MonoBehaviour:
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
-  - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
-  spawnValue: {x: 4.3, y: 7.4}
+  spawnValue: {x: 4, y: 7}
   problemText: {fileID: 587574517}
   comboText: {fileID: 1199849537}
   bonusTimeText: {fileID: 1181244892}
@@ -494,9 +493,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 182, y: 0}
-  m_SizeDelta: {x: 350, y: 100}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 6, y: 0}
+  m_SizeDelta: {x: 500, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &587574517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8103448, g: 0.15491886, b: 0.44407734, a: 1}
+  m_Color: {r: 0.89511234, g: 0.28676474, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -518,18 +517,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 60
+    m_FontSize: 158
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 64
+    m_MaxSize: 158
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '# + # = #'
+  m_Text: '# + # ='
 --- !u!222 &587574518
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -952,7 +951,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f69667411945f8e4fb698edec276cb78, type: 2}
+  - {fileID: 2100000, guid: 047a0ed45e6999042873138e1169088d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -984,13 +983,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1104097158}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.001, y: 0, z: 10}
-  m_LocalScale: {x: 18, y: 10.115, z: 1}
+  m_LocalScale: {x: 10.115, y: 16.115, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1181244890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1034,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 103
+  m_FontSize: 140
   m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -1118,7 +1117,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 77
+  m_FontSize: 100
   m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -1202,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
