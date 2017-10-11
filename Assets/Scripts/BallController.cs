@@ -5,11 +5,12 @@ using UnityEngine;
 public class BallController : MonoBehaviour {
 
 	public int speed; 							// Speed of ballz
-	public GameObject explosion;				// The explosion prefab goes here
+	public GameObject explosion_correct;		// The correct explosion prefab goes here
 	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
+	private GameObject explosion;				// Will hold this ballz' explosion particle
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
 	private TextMesh tm;						// Number text on top of the mathball
@@ -76,6 +77,11 @@ public class BallController : MonoBehaviour {
 		value = valueArray [0];	
 		isCorrect = valueArray [1];
 
+		if (isCorrect == 1)
+			explosion = explosion_correct;
+		else
+			explosion = explosion_incorrect;
+
 		tm.text = value.ToString(); // Sets the text on the ball to its assigned value
 	}
 		
@@ -83,24 +89,52 @@ public class BallController : MonoBehaviour {
 	// Input detection for if the ballz' collider has been clicked on
 	void OnMouseDown()
 	{
-		//moved the instantiate call to within the if statement to have seperate effects for right/wrong answers
+//		if (isCorrect == 1) // If its the correct ball
+//		{
+////			Instantiate (explosion_correct, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
+//			Explode();
+//			gc.AddProgress();		// Counts up how many times a correct ball has been clicked, called before the score is added so the speedbonus can be calculated
+// 			gc.AddScore (score); 	// The score value is multiplied by the combo and speed here
+//			gc.AddCombo ();			// Counts up the amount of correct balls clicked in a row, called afer the score is added so the new multiplier isn't factored in
+//			gc.ResetBallz (); 		// If this is the correct mathball, the gamecontroller will reset the game
+//		}
+//		else
+//		{
+////			Instantiate (explosion_incorrect, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
+//			Explode();
+//			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
+////			gc.AddScore (-score);		// If incorrect the score goes down by this value
+//			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
+//			gc.LoseHealth();
+//		}
 
+		ballTouched ();
+			
+	}
+
+	public void ballTouched()
+	{
 		if (isCorrect == 1) // If its the correct ball
 		{
-			Instantiate (explosion, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
+			// Spawns the explosion particle effect when clicked
+			Explode();
 			gc.AddProgress();		// Counts up how many times a correct ball has been clicked, called before the score is added so the speedbonus can be calculated
- 			gc.AddScore (score); 	// The score value is multiplied by the combo and speed here
+			gc.AddScore (score); 	// The score value is multiplied by the combo and speed here
 			gc.AddCombo ();			// Counts up the amount of correct balls clicked in a row, called afer the score is added so the new multiplier isn't factored in
 			gc.ResetBallz (); 		// If this is the correct mathball, the gamecontroller will reset the game
 		}
 		else
 		{
-			Instantiate (explosion_incorrect, transform.position, transform.rotation); // Spawns the explosion particle effect when clicked
+			// Spawns the explosion particle effect when clicked
+			Explode();
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
-//			gc.AddScore (-score);		// If incorrect the score goes down by this value
 			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
 			gc.LoseHealth();
 		}
 	}
-		
+
+	public void Explode()
+	{
+		Instantiate (explosion, transform.position, transform.rotation);
+	}
 }

@@ -9,12 +9,13 @@ public class GameController : MonoBehaviour {
 	public GameObject[] ballz;			// Array holding mathballz prefabs
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
-	public TextMesh comboText;			// Text that displays the combo multiplier
-	public TextMesh bonusTimeText;		// Text mesh that appears when time rolls over to the next level
-	public TextMesh scoreText;			// Text mesh on the score ball
-	public TextMesh timerText;			// Text mesh on the timer ball
+	public Text comboText;				// Text that displays the combo multiplier
+	public Text bonusTimeText;			// Text mesh that appears when time rolls over to the next level
+	public Text scoreText;				// Text mesh on the score ball
+	public Text timerText;				// Text mesh on the timer ball
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
 	public int healthStart;				// The starting health for each level
+	public Slider healthSlider;
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
@@ -91,7 +92,8 @@ public class GameController : MonoBehaviour {
 				bonusTimeText.text = ("");
 			}
 
-			timerText.text = Mathf.Round (timer).ToString (); // Rounds the timer value and displays it on the timer ball
+			//Place holder timer until actual 0:20 format can be coded
+			timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer ball
 
 			// If ballz have just been deleted, more are spawned
 			if (noBallz) {
@@ -158,7 +160,10 @@ public class GameController : MonoBehaviour {
 	{
 		//Loops through the array holding our insatiated ballz and destroys them
 		for (int x = 0; x < ballz.Length; x++) 
-		{
+		{	
+			if( ballzObjects [x] != null )
+				ballzObjects [x].gameObject.GetComponent<BallController> ().Explode ();
+
 			Destroy (ballzObjects [x].gameObject);
 		}
 
@@ -254,7 +259,7 @@ public class GameController : MonoBehaviour {
 	// Public function called by a correct mathball when clicked, adds to the combo bonus until it hits the max
 	public void AddCombo()
 	{
-		comboText.text = ("COMBO x" + comboValue);  // Shows how many in a row you have clicked
+		comboText.text = ("x" + comboValue);  // Shows how many in a row you have clicked
 
 		if (comboValue < maxCombo)
 			comboValue++;
@@ -296,7 +301,9 @@ public class GameController : MonoBehaviour {
 	{
 		health -= 1;
 
-		Debug.Log ("Health: " + health);
+//		Debug.Log ("Health: " + health);
+
+		healthSlider.value = health;
 
 		if (health == 0) {
 			GameOver ();
@@ -311,8 +318,9 @@ public class GameController : MonoBehaviour {
 	void ResetHealth()
 	{
 		health = healthStart;
+		healthSlider.value = health;
 
-		Debug.Log ("Health: " + health);
+//		Debug.Log ("Health: " + health);
 	}
 
 
@@ -327,6 +335,7 @@ public class GameController : MonoBehaviour {
 
 		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no wait makes the transition too abrupt
 	}
+
 
 	// Waits a little after hitting game over state then loads the game over scene
 	IEnumerator WaitForGameOver()

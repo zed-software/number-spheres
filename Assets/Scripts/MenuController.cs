@@ -17,12 +17,15 @@ public class MenuController : MonoBehaviour {
 	void Update () 
 	{	
 		// Currently just waits for a tap from the user to begin the game
-		for (int i = 0; i < Input.touchCount; ++i) 
-		{
-			if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
-			{
-				SceneManager.LoadScene (1);
-			}
-		}
+//		for (int i = 0; i < Input.touchCount; ++i) 
+//		{
+//			if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
+//			{
+//				SceneManager.LoadScene (1);
+//			}
+//		}
+
+		if(Input.touchCount > 0)
+			SceneManager.LoadScene (1);
 	}
 }

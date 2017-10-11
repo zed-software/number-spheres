@@ -20,12 +20,15 @@ public class GameOverController : MonoBehaviour {
 	// Waits for the user to tap the screen before reloading the main game scene
 	void Update () 
 	{
-		for (int i = 0; i < Input.touchCount; ++i) 
-		{
-			if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
-			{
-				SceneManager.LoadScene (1);
-			}
-		}
+//		for (int i = 0; i < Input.touchCount; ++i) 
+//		{
+//			if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
+//			{
+//				SceneManager.LoadScene (1);
+//			}
+//		}
+
+		if(Input.touchCount > 0)
+			SceneManager.LoadScene (1);
 	}
 }
