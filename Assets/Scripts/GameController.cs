@@ -10,9 +10,9 @@ public class GameController : MonoBehaviour {
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
 	public Text comboText;				// Text that displays the combo multiplier
-	public Text bonusTimeText;			// Text mesh that appears when time rolls over to the next level
-	public Text scoreText;				// Text mesh on the score ball
-	public Text timerText;				// Text mesh on the timer ball
+	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
+	public Text scoreText;				// Text UI for the the score
+	public Text timerText;				// Text UI for the timer
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
 	public int healthStart;				// The starting health for each level
 	public Slider healthSlider;
@@ -34,7 +34,8 @@ public class GameController : MonoBehaviour {
 	private GameObject[] ballzObjects;	// An array holding the instantiated mathballz
 	private int valueAssignedOrder;		// Used to keep track of which value has been assigned to a ball, set to 0 right before all the ballz spawn
 	private int[] ballValues;			// An array of all the ball values, first value is the correct one
-	private float score;				// Total player score
+	private float totalScore;			// Total player score
+	private float score;
 	private int comboValue;				// Holds how many answers in a row the player got correct
 	private bool gameOver;				// Bool used to check if the game has ended
 	private bool noBallz;				// Bool used to check if there are any ballz in the gameworld
@@ -67,19 +68,6 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-//		// If the game is over, the user taps to reload the scene
-//		if (gameOver) {
-////			if (Input.GetKeyDown (KeyCode.R)) {
-//			for (int i = 0; i < Input.touchCount; ++i) 
-//			{
-//				if (Input.GetTouch (0).phase.Equals (TouchPhase.Began)) 
-//				{
-//					SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
-//				}
-//			}
-//		}
-
-
 		// If there is still time left, and if the user hasn't beaten the final level, the game checks if there are any ballz in the game and then spawns them
 		if (timer > 0 && !gameOver) {
 
@@ -92,8 +80,10 @@ public class GameController : MonoBehaviour {
 				bonusTimeText.text = ("");
 			}
 
-			//Place holder timer until actual 0:20 format can be coded
-			timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer ball
+			if(timer >= 10)//Place holder timer until actual 0:20 format can be coded
+				timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
+			else
+				timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
 
 			// If ballz have just been deleted, more are spawned
 			if (noBallz) {
@@ -102,7 +92,6 @@ public class GameController : MonoBehaviour {
 		} else { // If the timer runs out or the game is over
 //			gameOver = true;
 			GameOver();
-//			SetGameOverText ();	// Sets the problem text to game over and reset instruction text
 //			ResetBallz ();	// Deletes any remaining ballz
 		}
 
@@ -174,19 +163,26 @@ public class GameController : MonoBehaviour {
 	// Public function called by the correct ballz when they are clicked
 	// Parameter s is the score value assigned to the mathball
 	public void AddScore(int s) 
-	{		
-		score += (s * comboValue * scoreSpeedBonus);
+	{	
+		score = (s * comboValue * scoreSpeedBonus);
+		totalScore += score;
 		UpdateScore ();
 
 		//Temporary, uncomment to display the multipliers and total points awarded for the correct answer
-		Debug.Log ("Correct click score " + (s * comboValue * scoreSpeedBonus) + " = " + s + " * " + comboValue + " * "  + scoreSpeedBonus);
+		//Debug.Log ("Correct click score " + (s * comboValue * scoreSpeedBonus) + " = " + s + " * " + comboValue + " * "  + scoreSpeedBonus);
+	}
+
+
+	public float GetBallScore()
+	{
+		return score;
 	}
 
 
 	// Just sets score to 0
 	void ResetScore()
 	{
-		score = 0;
+		totalScore = 0;
 		UpdateScore ();
 	}
 		
@@ -194,7 +190,7 @@ public class GameController : MonoBehaviour {
 	// Updates the text mesh on the score ball
 	void UpdateScore()
 	{
-		scoreText.text = Mathf.Round(score).ToString();
+		scoreText.text = Mathf.Round(totalScore).ToString();
 	}
 		
 
@@ -248,13 +244,6 @@ public class GameController : MonoBehaviour {
 	{
 		levelProgressClicks = 0;
 	}
-
-
-	// Function used to give player reset instructions once a game over is triggered
-	void SetGameOverText()
-	{
-		problemText.text = ("Game Over: Tap Screen to Restart");
-	}
 		
 	// Public function called by a correct mathball when clicked, adds to the combo bonus until it hits the max
 	public void AddCombo()
@@ -307,8 +296,6 @@ public class GameController : MonoBehaviour {
 
 		if (health == 0) {
 			GameOver ();
-//			gameOver = true;
-//			ResetBallz ();
 		}
 	}
 
@@ -331,9 +318,9 @@ public class GameController : MonoBehaviour {
 		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
 		ResetBallz();		
 
-		PlayerPrefs.SetString ("Score", Mathf.Round(score).ToString()); // Saves the score to a settings file for the game
+		PlayerPrefs.SetString ("Score", Mathf.Round(totalScore).ToString()); // Saves the score to a settings file for the game
 
-		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no wait makes the transition too abrupt
+		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no waiting makes the transition too abrupt
 	}
 
 
