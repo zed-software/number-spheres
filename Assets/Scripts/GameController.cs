@@ -151,7 +151,7 @@ public class GameController : MonoBehaviour {
 		for (int x = 0; x < ballz.Length; x++) 
 		{	
 			if( ballzObjects [x] != null )
-				ballzObjects [x].gameObject.GetComponent<BallController> ().Explode ();
+				ballzObjects [x].gameObject.GetComponent<BallController> ().Explode (); // Explodes remaining ballz
 
 			Destroy (ballzObjects [x].gameObject);
 		}
@@ -220,12 +220,12 @@ public class GameController : MonoBehaviour {
 			if (level > 4)
 			{
 				lc.RaiseMaxProblemValues (problemValueRaise);
-				lc.SetLevel(Random.Range( 1, 4 ));
+//				lc.SetLevel(Random.Range( 1, 4 ));
 			}
-			else
-			{
-				lc.SetLevel (level);
-			}
+
+			lc.SetLevel (level);
+
+			Debug.Log (level.ToString ());
 
 			bonusTime += timer; // Any remaining time is added to the bonus time
 			timer = timerValue;	// Main timer is reset

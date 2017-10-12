@@ -93,10 +93,10 @@ public class BallController : MonoBehaviour {
  * Comment when building on phones, no mouse events in the code mean better performance on mobile
  **/
 // Input detection for if the ballz' collider has been clicked on
-//	void OnMouseDown()
-//	{
-//		ballTouched ();		
-//	}
+	void OnMouseDown()
+	{
+		ballTouched ();		
+	}
 
 	public void ballTouched()
 	{
@@ -116,8 +116,8 @@ public class BallController : MonoBehaviour {
 		else
 		{
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
-			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
 			gc.LoseHealth();
+			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
 		}
 	}
 

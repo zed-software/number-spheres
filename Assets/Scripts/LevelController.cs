@@ -38,11 +38,12 @@ public class LevelController : MonoBehaviour {
 
 
 	// Public function called by the GameController to create a problem, depending on the level
-	// Parameter is the size of answer values it will need to generate
+	// Parameter is the length of answer values it will need to generate
 	public void GenerateProblem(int length)
 	{
 		allValues = new int[length];
 		answerValue = 0;
+		int levelSwitch = level;
 //		int min = 1, max = 10; // The minimum and mazimum values for the problem variables
 		int num1 = 0, num2 = 0;// num3 = 0; // Set to 0 to aviod some error
 
@@ -50,7 +51,13 @@ public class LevelController : MonoBehaviour {
 		// Each case loops until the problems answer isn't 0
 		// 0 is avoided because the default values of the int array with the incorrect values is 0, not null, 
 		// and a loop below uses the 0 to know if the spot on the array has been filled yet
-		switch (level) 
+
+		if (level >= 5)
+		{
+			levelSwitch = Random.Range (1, 5); // 5 as the max random range becuase max is apparantly exclusive in Random.Range for ints
+		}
+
+		switch (levelSwitch) 
 		{
 			case 1: // Addition
 			{
@@ -73,9 +80,30 @@ public class LevelController : MonoBehaviour {
 					num1 = Random.Range (min, max);
 					num2 = Random.Range (min, max);
 
-					answerValue = num1 - num2;
-					answerRange = new Vector2 ((min - max), (max - min));
-					gc.UpdateProblem (num1 + " - " + num2 + " =");
+					if (level >= 5)
+					{
+						answerValue = num1 - num2;
+						answerRange = new Vector2 ((min - max), (max - min));
+						gc.UpdateProblem (num1 + " - " + num2 + " =");
+					} 
+					else
+					{
+						if (num1 >= num2)
+						{
+							answerValue = num1 - num2;
+							gc.UpdateProblem (num1 + " - " + num2 + " =");
+						} else if (num1 < num2)
+						{
+							answerValue = num2 - num1;
+							gc.UpdateProblem (num2 + " - " + num1 + " =");
+						}
+
+						answerRange = new Vector2 (min, (max - min));
+					}
+
+//					answerValue = num1 - num2;
+//					answerRange = new Vector2 ((min - max), (max - min));
+//					gc.UpdateProblem (num1 + " - " + num2 + " =");
 				}
 
 				break;
@@ -164,7 +192,7 @@ public class LevelController : MonoBehaviour {
 			// Second loop will run until the default value in the array slot is changed from 0 and also isn't the correct answer
 			while ( (incorrectValues[x] == 0) || (incorrectValues[x] == answerValue)) 
 			{
-				bool repeatValueCheck = false; // Boolean used to check if random number generated has already been used in the array
+				bool repeatValueCheck = false;	// Boolean used to check if random number generated has already been used in the array
 
 				// Third loop will run until the fourth loop nested inside runs all the way through without breaking (failing a repetition check)
 				while (!repeatValueCheck) 
