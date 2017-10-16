@@ -20,7 +20,7 @@ public class OnTouchDown : MonoBehaviour
 
 				if (hit.collider != null) 
 				{
-					Debug.Log (hit.collider.name);
+//					Debug.Log (hit.collider.name);
 
 					hit.collider.gameObject.SendMessage ("TouchBall");
 				}

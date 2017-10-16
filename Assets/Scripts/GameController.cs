@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
+	public GameObject healthBall;
 	public GameObject levelTransition;
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -243,6 +244,11 @@ public class GameController : MonoBehaviour {
 				lc.RaiseMaxProblemValues (problemValueRaise);
 			}
 
+			if (level % 5 == 0)
+			{
+				Instantiate(healthBall, Vector3.zero, Quaternion.identity);
+			}
+
 			lc.SetLevel (level);
 
 			bonusTime += timer; // Any remaining time is added to the bonus time
@@ -307,11 +313,11 @@ public class GameController : MonoBehaviour {
 			GameOver ();
 		}
 	}
-
+		
 
 	// Resets health variable back to the starting value
 	// Called in start() and during level ups
-	void ResetHealth()
+	public void ResetHealth()
 	{
 		health = healthStart;
 		healthSlider.value = health;

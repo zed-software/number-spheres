@@ -276,6 +276,7 @@ MonoBehaviour:
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
+  healthBall: {fileID: 1536584402349882, guid: e9bf7e220f3e4f845986d272f8d60d1e, type: 2}
   levelTransition: {fileID: 640503489}
   spawnValue: {x: 3, y: 5.25}
   problemText: {fileID: 587574517}
@@ -287,7 +288,7 @@ MonoBehaviour:
   levelStartDelay: 1.5
   healthStart: 3
   healthSlider: {fileID: 600839093}
-  totalLevelProgressClicks: 5
+  totalLevelProgressClicks: 2
   maxCombo: 5
   maxSpeedBonus: 5
   problemValueRaise: 5

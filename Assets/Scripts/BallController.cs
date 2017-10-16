@@ -66,7 +66,7 @@ public class BallController : MonoBehaviour {
 		Vector2 randomVector = new Vector2 (Random.Range(-range, range), Random.Range(-range, range)); // randomVector is used to pick a direction for the initial force on the ball
 		randomVector.Normalize (); // Sets the x and y values to a magnitude of 1
 
-		rb.AddForce (randomVector * speed); // Pushes the ball in a random direction
+		rb.AddForce(randomVector * speed); // Pushes the ball in a random direction
 	}
 		
 
@@ -93,10 +93,10 @@ public class BallController : MonoBehaviour {
  * Comment when building on phones, no mouse events in the code mean better performance on mobile
  **/
 // Input detection for if the ballz' collider has been clicked on
-//	void OnMouseDown()
-//	{
-//		BallTouched ();		
-//	}
+	void OnMouseDown()
+	{
+		BallTouched ();		
+	}
 
 	public void BallTouched()
 	{
