@@ -24,13 +24,13 @@ public class BallzToucher : MonoBehaviour {
 //				if (this.GetComponent<Collider2D>().OverlapPoint(wp)) // Checks if the screen touch world position overlaps the touch collider on this object
 //				{
 //					transform.parent.gameObject.SendMessage ("BallTouched");
-////					this.GetComponentInParent<BallController> ().ballTouched ();
+////					this.GetComponentInParent<BallController> ().BallTouched ();
 //				}
 //			}
 //		}
 	}
 
-	void TouchBall()
+	public void TouchBall()
 	{
 		transform.parent.gameObject.SendMessage ("BallTouched");
 	}
