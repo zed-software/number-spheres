@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
+	public GameObject levelTransition;
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
 	public Text comboText;				// Text that displays the combo multiplier
@@ -14,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public Text scoreText;				// Text UI for the the score
 	public Text timerText;				// Text UI for the timer
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
+	public float levelStartDelay;
 	public int healthStart;				// The starting health for each level
 	public Slider healthSlider;
 
@@ -35,7 +37,7 @@ public class GameController : MonoBehaviour {
 	private int valueAssignedOrder;		// Used to keep track of which value has been assigned to a ball, set to 0 right before all the ballz spawn
 	private int[] ballValues;			// An array of all the ball values, first value is the correct one
 	private float totalScore;			// Total player score
-	private float score;
+	private float score;				// Score * combo * time
 	private int comboValue;				// Holds how many answers in a row the player got correct
 	private bool gameOver;				// Bool used to check if the game has ended
 	private bool noBallz;				// Bool used to check if there are any ballz in the gameworld
@@ -43,6 +45,8 @@ public class GameController : MonoBehaviour {
 	private LevelController lc;			// Used to call the LevelController script
 	private int levelProgressClicks;	// Used to keep track of how many clicks have been correct on current level
 	private int health;					// Used to keep track of current health
+	private Text levelText;				// Level transition text
+	private bool transitioningLevel;	// Used to stop timer and ballspawnz while the level transition card is up
 
 	void Start () 
 	{
@@ -63,36 +67,51 @@ public class GameController : MonoBehaviour {
 
 		timer = timerValue;		// Sets the timer to its starting value
 
+//		transitioningLevel = true;
+
+		levelText = levelTransition.GetComponentInChildren<Text> ();
+//		levelText.text = "Level " + level;
+//		levelTransition.SetActive (true);
+//
+//		Invoke ("HideLevelTransition", levelStartDelay);
+
+		TransitionLevel ();	// Brings up first level card
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-		// If there is still time left, and if the user hasn't beaten the final level, the game checks if there are any ballz in the game and then spawns them
-		if (timer > 0 && !gameOver) {
+		if (!transitioningLevel) // Stops timer and ballz from spawning while level transition cards are up
+		{
+			// If there is still time left, and if the user hasn't beaten the final level, the game checks if there are any ballz in the game and then spawns them
+			if (timer > 0 && !gameOver)
+			{
 
-			// If there is bonus time available, the bonus time counts down instead
-			if (bonusTime > 0) {
-				bonusTime -= Time.deltaTime;
-				bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString () + "!");
-			} else { // No bonus time means the main timer counts down
-				timer -= Time.deltaTime;
-				bonusTimeText.text = ("");
-			}
+				// If there is bonus time available, the bonus time counts down instead
+				if (bonusTime > 0)
+				{
+					bonusTime -= Time.deltaTime;
+					bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString () + "!");
+				} else
+				{ // No bonus time means the main timer counts down
+					timer -= Time.deltaTime;
+					bonusTimeText.text = ("");
+				}
 
-			if(timer >= 10)//Place holder timer until actual 0:20 format can be coded
+				if (timer >= 10)//Place holder timer until actual 0:20 format can be coded
 				timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
 			else
-				timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
+					timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
 
-			// If ballz have just been deleted, more are spawned
-			if (noBallz) {
-				SpawnBallz ();
+				// If ballz have just been deleted, more are spawned
+				if (noBallz)
+				{
+					SpawnBallz ();
+				}
+			} else
+			{ // If the timer runs out or the game is over
+				GameOver ();
 			}
-		} else { // If the timer runs out or the game is over
-//			gameOver = true;
-			GameOver();
-//			ResetBallz ();	// Deletes any remaining ballz
 		}
 
 	}
@@ -168,11 +187,10 @@ public class GameController : MonoBehaviour {
 		totalScore += score;
 		UpdateScore ();
 
-		//Temporary, uncomment to display the multipliers and total points awarded for the correct answer
 		//Debug.Log ("Correct click score " + (s * comboValue * scoreSpeedBonus) + " = " + s + " * " + comboValue + " * "  + scoreSpeedBonus);
 	}
 
-
+	// Public function called by ball controller on correct clicks, used to display pop up score
 	public float GetBallScore()
 	{
 		return score;
@@ -187,7 +205,7 @@ public class GameController : MonoBehaviour {
 	}
 		
 
-	// Updates the text mesh on the score ball
+	// Updates the score text in the UI
 	void UpdateScore()
 	{
 		scoreText.text = Mathf.Round(totalScore).ToString();
@@ -211,31 +229,25 @@ public class GameController : MonoBehaviour {
 		if (levelProgressClicks == totalLevelProgressClicks) // Level up
 		{
 			ResetProgress ();
-			ResetHealth ();		// Sets health back to starting value
 
 			level++;
+
+			StartCoroutine ("WaitForTransition"); // Brings up the level transition card after a short wait
+//			ResetHealth ();					// Sets health back to starting value
+//			TransitionLevel ();
 
 			// If we have leveled past the first 4, the max range of the generated numbers is increased and a random level is picked, 
 			// this is the game loop from this point on
 			if (level > 4)
 			{
 				lc.RaiseMaxProblemValues (problemValueRaise);
-//				lc.SetLevel(Random.Range( 1, 4 ));
 			}
 
 			lc.SetLevel (level);
 
-			Debug.Log (level.ToString ());
-
 			bonusTime += timer; // Any remaining time is added to the bonus time
 			timer = timerValue;	// Main timer is reset
 		}
-
-		// Temporary end state until we figure out total levels or level loops
-//		if (level > 4)
-//		{
-//			gameOver = true;
-//		}
 	}
 		
 
@@ -252,7 +264,6 @@ public class GameController : MonoBehaviour {
 
 		if (comboValue < maxCombo)
 			comboValue++;
-
 	}
 		
 
@@ -290,9 +301,7 @@ public class GameController : MonoBehaviour {
 	{
 		health -= 1;
 
-//		Debug.Log ("Health: " + health);
-
-		healthSlider.value = health;
+		healthSlider.value = health; // Sets UI health bar to current health
 
 		if (health == 0) {
 			GameOver ();
@@ -306,8 +315,6 @@ public class GameController : MonoBehaviour {
 	{
 		health = healthStart;
 		healthSlider.value = health;
-
-//		Debug.Log ("Health: " + health);
 	}
 
 
@@ -327,8 +334,66 @@ public class GameController : MonoBehaviour {
 	// Waits a little after hitting game over state then loads the game over scene
 	IEnumerator WaitForGameOver()
 	{
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (2);
 		SceneManager.LoadScene (2);
+	}
 
+
+	// Waits a little after hitting a level up to show the level transition card
+	IEnumerator WaitForTransition()
+	{
+		transitioningLevel = true;	// Stops timer and ballz from spawning
+		yield return new WaitForSeconds (0.8f);
+		TransitionLevel ();
+	}
+
+
+	// Brings up the level transition card then disables it after a few seconds
+	void TransitionLevel ()
+	{
+		string levelOperator;
+
+		transitioningLevel = true; 	// Stops timer and ballz from spawning
+
+		switch (level)
+		{
+			case 1:
+				{
+					levelOperator = "Addition";
+					break;
+				}
+			case 2:
+				{
+					levelOperator = "Subtraction";
+					break;
+				}
+			case 3:
+				{
+					levelOperator = "Multiplication";
+					break;
+				}
+			case 4:
+				{
+					levelOperator = "Division";
+					break;
+				}
+			default:
+				{
+					levelOperator = "Grab Bag";
+					break;
+				}
+		}
+
+		levelText.text = "Level " + level + "\n" + levelOperator;
+		levelTransition.SetActive (true);	// Turns on the level up UI
+
+		Invoke ("HideLevelTransition", levelStartDelay); // Invoke is a way to wait before calling a function 
+	}
+
+	// disables the level up transition card
+	void HideLevelTransition()
+	{
+		levelTransition.SetActive (false);
+		transitioningLevel = false; // allows ballz to spawn again
 	}
 }

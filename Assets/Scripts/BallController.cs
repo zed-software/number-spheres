@@ -39,7 +39,7 @@ public class BallController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		tm.transform.rotation = Quaternion.identity;
 	}
 
 
