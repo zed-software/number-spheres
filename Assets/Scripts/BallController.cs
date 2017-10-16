@@ -25,9 +25,9 @@ public class BallController : MonoBehaviour {
 		gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");// Finds the gamecontroller object
 		gc = gameControllerObject.GetComponent<GameController> (); // sets it to out easy to use local variable
 
-		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to out local variable
+		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to our local variable
 
-		rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to out local variable
+		rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to our local variable
 
 		SetValue (); // Gets number value assigned to it from the gamecontroller 
 		Push (); // Pushes the ball in a random direction
@@ -93,12 +93,12 @@ public class BallController : MonoBehaviour {
  * Comment when building on phones, no mouse events in the code mean better performance on mobile
  **/
 // Input detection for if the ballz' collider has been clicked on
-	void OnMouseDown()
-	{
-		ballTouched ();		
-	}
+//	void OnMouseDown()
+//	{
+//		BallTouched ();		
+//	}
 
-	public void ballTouched()
+	public void BallTouched()
 	{
 		Explode ();		// Spawns the explosion particle effect when clicked
 

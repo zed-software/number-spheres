@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallzToucher : MonoBehaviour {
 
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,31 +13,25 @@ public class BallzToucher : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Vector3 wp = new Vector3 ();
-
-		for (int i = 0; i < Input.touchCount; ++i) 
-		{
-			if (Input.GetTouch (i).phase.Equals (TouchPhase.Began)) 
-			{
-				wp = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).position); // ScreenToWorldPoint takes a screen position (the touch) and returns a position in world space
-				
-				if (this.GetComponent<Collider2D>().OverlapPoint(wp)) // Checks if the screen touch world position overlaps the touch collider on this object
-				{
-					this.GetComponentInParent<BallController> ().ballTouched ();
-				}
-			}
-		}
-
-//		if (Input.touchCount > 0) 
-//		{
-//			Vector3 wp = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).position); // ScreenToWorldPoint takes a screen position (the touch) and returns a position in world space
+//		Vector3 wp = new Vector3 ();
 //
-//		
-//			if (this.GetComponent<Collider2D>().OverlapPoint(wp)) 
+//		for (int i = 0; i < Input.touchCount; ++i) 
+//		{
+//			if (Input.GetTouch (i).phase.Equals (TouchPhase.Began)) 
 //			{
-//				this.GetComponentInParent<BallController> ().ballTouched ();
+//				wp = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).position); // ScreenToWorldPoint takes a screen position (the touch) and returns a position in world space
+//				
+//				if (this.GetComponent<Collider2D>().OverlapPoint(wp)) // Checks if the screen touch world position overlaps the touch collider on this object
+//				{
+//					transform.parent.gameObject.SendMessage ("BallTouched");
+////					this.GetComponentInParent<BallController> ().ballTouched ();
+//				}
 //			}
 //		}
-		
+	}
+
+	void TouchBall()
+	{
+		transform.parent.gameObject.SendMessage ("BallTouched");
 	}
 }
