@@ -288,7 +288,7 @@ MonoBehaviour:
   levelStartDelay: 1.5
   healthStart: 3
   healthSlider: {fileID: 600839093}
-  totalLevelProgressClicks: 2
+  totalLevelProgressClicks: 5
   maxCombo: 5
   maxSpeedBonus: 5
   problemValueRaise: 5

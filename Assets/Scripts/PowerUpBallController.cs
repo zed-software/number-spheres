@@ -26,10 +26,10 @@ public class PowerUpBallController : MonoBehaviour {
 	}
 
 // Input detection for if the ballz' collider has been clicked on
-	void OnMouseDown()
-	{
-		BallTouched ();		
-	}
+//	void OnMouseDown()
+//	{
+//		BallTouched ();		
+//	}
 
 	void Push()
 	{
