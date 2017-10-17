@@ -7,18 +7,22 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
-	public GameObject[] powerUps;
-	public GameObject levelTransition;
+	public GameObject[] powerUps;		// Array holding power up prefabs
+	public GameObject levelTransition;	// Level transition image and text
+	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
 	public Text comboText;				// Text that displays the combo multiplier
 	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
 	public Text scoreText;				// Text UI for the the score
 	public Text timerText;				// Text UI for the timer
+	[Tooltip("Timer starting value, reset to this value when level is changed")]
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
-	public float levelStartDelay;
-	public int healthStart;				// The starting health for each level
-	public Slider healthSlider;
+	[Tooltip("How long (in seconds) the level transitions last")]
+	public float levelStartDelay;		// How long (in seconds) the level transitions last
+	[Tooltip("Starting health")]
+	public int healthStart;				// The starting health
+	public Slider healthSlider;			// Health bar UI
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
@@ -68,13 +72,7 @@ public class GameController : MonoBehaviour {
 
 		timer = timerValue;		// Sets the timer to its starting value
 
-//		transitioningLevel = true;
-
 		levelText = levelTransition.GetComponentInChildren<Text> ();
-//		levelText.text = "Level " + level;
-//		levelTransition.SetActive (true);
-//
-//		Invoke ("HideLevelTransition", levelStartDelay);
 
 		TransitionLevel ();	// Brings up first level card
 	}
@@ -140,9 +138,11 @@ public class GameController : MonoBehaviour {
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
 
+		//Used to spawn health balls every 5 levels, at the beginning of the level
+		//Currently programmed to pick a random power up from the power up array, but only one exits so far
 		if ((level % 5 == 0) && levelProgressClicks == 0)
 		{
-			Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10;
+			Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
 			Instantiate(powerUps[Random.Range(0, powerUps.Length)], spawnLocation, Quaternion.identity);
 		}
 	}
@@ -237,11 +237,10 @@ public class GameController : MonoBehaviour {
 		{
 			ResetProgress ();
 
-			level++;
+			level++; // ++ local int that keeps track of the level
 
 			StartCoroutine ("WaitForTransition"); // Brings up the level transition card after a short wait
 //			ResetHealth ();					// Sets health back to starting value
-//			TransitionLevel ();
 
 			// If we have leveled past the first 4, the max range of the generated numbers is increased and a random level is picked, 
 			// this is the game loop from this point on
@@ -250,13 +249,7 @@ public class GameController : MonoBehaviour {
 				lc.RaiseMaxProblemValues (problemValueRaise);
 			}
 
-//			if ((level % 2 == 0) && !transitioningLevel)
-//			{
-//				Vector3 temp = new Vector3 (10, 0, 0);
-//				Instantiate(powerUps[Random.Range(0, powerUps.Length)], temp, Quaternion.identity);
-//			}
-
-			lc.SetLevel (level);
+			lc.SetLevel (level); // Letting the level controller know what level it is now
 
 			bonusTime += timer; // Any remaining time is added to the bonus time
 			timer = timerValue;	// Main timer is reset
@@ -338,7 +331,7 @@ public class GameController : MonoBehaviour {
 		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
 		ResetBallz();		
 
-		PlayerPrefs.SetString ("Score", Mathf.Round(totalScore).ToString()); // Saves the score to a settings file for the game
+		PlayerPrefs.SetString ("Score", Mathf.Round(totalScore).ToString()); // Saves the score to a settings file for the game over screen
 
 		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no waiting makes the transition too abrupt
 	}
@@ -347,8 +340,8 @@ public class GameController : MonoBehaviour {
 	// Waits a little after hitting game over state then loads the game over scene
 	IEnumerator WaitForGameOver()
 	{
-		yield return new WaitForSeconds (2);
-		SceneManager.LoadScene (2);
+		yield return new WaitForSeconds (2);	// Waits 2 seconds
+		SceneManager.LoadScene (2);				// Loads main scene
 	}
 
 

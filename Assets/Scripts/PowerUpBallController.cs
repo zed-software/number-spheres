@@ -9,7 +9,7 @@ public class PowerUpBallController : MonoBehaviour {
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;
-	private bool isInBoundry;
+	private bool isInBoundry;					// Used to check if the ball should react to collisions yet
 
 	// Use this for initialization
 	void Start () 
@@ -19,10 +19,10 @@ public class PowerUpBallController : MonoBehaviour {
 
 		rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to our local variable
 
-		isInBoundry = false;
-		this.GetComponent<Collider2D> ().isTrigger = true;
+		isInBoundry = false;				// The gamecontroller should spawn power ups outside the boundary
+		this.GetComponent<Collider2D> ().isTrigger = true;	// Sets the power up collider to a trigger, so that it will go through the boundry
 
-		Push();
+		Push();			// Pushes power up towards the game center
 	}
 	
 	// Update is called once per frame
@@ -40,16 +40,17 @@ public class PowerUpBallController : MonoBehaviour {
 	// Because power ups spawn outside the boundry, the push function here always pushes them towards the center of the screen
 	void Push()
 	{
-		Vector3 centerScreen = Camera.main.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 10f));
-		Vector2 center = new Vector2 (centerScreen.x, centerScreen.y);
+		Vector3 centerScreen = Camera.main.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 10f)); // Finds the center of the screen
+		Vector2 center = new Vector2 (centerScreen.x, centerScreen.y);							// Converts to a vector2
 
-		Vector2 direction = center - (new Vector2(transform.position.x, transform.position.y));
+		Vector2 direction = center - (new Vector2(transform.position.x, transform.position.y)); // Subtracts centor coordinates from ball coordinates to find the direction of the push
 
 		rb.AddForce(direction * speed); // Pushes the ball towards the center
 	}
 
 
-
+	// Fills the players health
+	// Function needs to be changed when there are more power ups
 	public void BallTouched()
 	{
 		gc.ResetHealth ();
@@ -92,6 +93,8 @@ public class PowerUpBallController : MonoBehaviour {
 //		}
 //	}
 
+
+	// When the ball detects it has stopped touching the boundary after passing into it, it stops being a trigger and collides off objects again
 	void OnTriggerExit2D (Collider2D coll)
 	{
 		if (coll.gameObject.CompareTag("Boundry") && !isInBoundry)

@@ -47,16 +47,15 @@ public class LevelController : MonoBehaviour {
 //		int min = 1, max = 10; // The minimum and mazimum values for the problem variables
 		int num1 = 0, num2 = 0;// num3 = 0; // Set to 0 to aviod some error
 
-		// Switch statement for the different level problem generations
-		// Each case loops until the problems answer isn't 0
-		// 0 is avoided because the default values of the int array with the incorrect values is 0, not null, 
-		// and a loop below uses the 0 to know if the spot on the array has been filled yet
-
-		if (level >= 5)
+		if (level >= 5) // If level 5 is reached, a random level is picked from the switch statement below
 		{
 			levelSwitch = Random.Range (1, 5); // 5 as the max random range becuase max is apparantly exclusive in Random.Range for ints
 		}
 
+		// Switch statement for the different level problem generations
+		// Each case loops until the problems answer isn't 0
+		// 0 is avoided because the default values of the int array with the incorrect values is 0, not null, 
+		// and a loop below uses the 0 to know if the spot on the array has been filled yet
 		switch (levelSwitch) 
 		{
 			case 1: // Addition
@@ -80,7 +79,7 @@ public class LevelController : MonoBehaviour {
 					num1 = Random.Range (min, max);
 					num2 = Random.Range (min, max);
 
-					if (level >= 5)
+					if (level >= 5) // Allows negatives for grab bag levels
 					{
 						answerValue = num1 - num2;
 						answerRange = new Vector2 ((min - max), (max - min));
@@ -100,10 +99,6 @@ public class LevelController : MonoBehaviour {
 
 						answerRange = new Vector2 (min, (max - min));
 					}
-
-//					answerValue = num1 - num2;
-//					answerRange = new Vector2 ((min - max), (max - min));
-//					gc.UpdateProblem (num1 + " - " + num2 + " =");
 				}
 
 				break;
@@ -140,7 +135,7 @@ public class LevelController : MonoBehaviour {
 					answerRange = new Vector2 (min, max);
 					gc.UpdateProblem (multipliedVariable + " / " + num2 + " =");
 
-					// Addition and subtraction code
+					// Old level 4 addition and subtraction code
 //					num1 = Random.Range (min, max);
 //					num2 = Random.Range (min, max);
 //					num3 = Random.Range (min, max);
@@ -228,8 +223,6 @@ public class LevelController : MonoBehaviour {
 	// Called by GameController when it spawns the ballz
 	public int[] GetValues()
 	{
-//		int [] allValues = new int[incorrectValues.Length + 1];
-
 		for (int x = 1; x < allValues.Length; x++) 
 		{
 			allValues [x] = incorrectValues [x - 1];

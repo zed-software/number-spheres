@@ -13,6 +13,8 @@ public class BallzToucher : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		// Original ball toucher code
+		// Every individual ball used to check if they were tapped when a touch was detected
 //		Vector3 wp = new Vector3 ();
 //
 //		for (int i = 0; i < Input.touchCount; ++i) 
@@ -30,8 +32,10 @@ public class BallzToucher : MonoBehaviour {
 //		}
 	}
 
+
+	// Called by the OnTouchDown script on the camera
 	public void TouchBall()
 	{
-		transform.parent.gameObject.SendMessage ("BallTouched");
+		transform.parent.gameObject.SendMessage ("BallTouched"); // Sends this message to our ball controller script, so the script needs a BallTouched() function
 	}
 }
