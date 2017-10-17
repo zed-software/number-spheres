@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
-	public GameObject healthBall;
+	public GameObject[] powerUps;
 	public GameObject levelTransition;
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -100,8 +100,8 @@ public class GameController : MonoBehaviour {
 				}
 
 				if (timer >= 10)//Place holder timer until actual 0:20 format can be coded
-				timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
-			else
+					timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
+				else
 					timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
 
 				// If ballz have just been deleted, more are spawned
@@ -135,9 +135,15 @@ public class GameController : MonoBehaviour {
 		// loop that spawns ballz in array
 		for (int x = 0; x < ballz.Length; x++) 
 		{
-			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
+			Vector2 spawnLocation = new Vector2 (Random.Range (spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
+		}
+
+		if ((level % 5 == 0) && levelProgressClicks == 0)
+		{
+			Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10;
+			Instantiate(powerUps[Random.Range(0, powerUps.Length)], spawnLocation, Quaternion.identity);
 		}
 	}
 		
@@ -244,10 +250,11 @@ public class GameController : MonoBehaviour {
 				lc.RaiseMaxProblemValues (problemValueRaise);
 			}
 
-			if (level % 5 == 0)
-			{
-				Instantiate(healthBall, Vector3.zero, Quaternion.identity);
-			}
+//			if ((level % 2 == 0) && !transitioningLevel)
+//			{
+//				Vector3 temp = new Vector3 (10, 0, 0);
+//				Instantiate(powerUps[Random.Range(0, powerUps.Length)], temp, Quaternion.identity);
+//			}
 
 			lc.SetLevel (level);
 

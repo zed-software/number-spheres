@@ -276,7 +276,8 @@ MonoBehaviour:
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
   - {fileID: 1943691505741416, guid: 55c729eb72160aa4ca3e21f44d2f9281, type: 2}
-  healthBall: {fileID: 1536584402349882, guid: e9bf7e220f3e4f845986d272f8d60d1e, type: 2}
+  powerUps:
+  - {fileID: 1467439997060608, guid: e8791d1ea6b64bb46b5567d66e7a90bd, type: 2}
   levelTransition: {fileID: 640503489}
   spawnValue: {x: 3, y: 5.25}
   problemText: {fileID: 587574517}
@@ -907,9 +908,9 @@ GameObject:
   - component: {fileID: 806860208}
   - component: {fileID: 806860207}
   - component: {fileID: 806860206}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: top
-  m_TagString: Untagged
+  m_TagString: Boundry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1058,9 +1059,9 @@ GameObject:
   - component: {fileID: 1026047637}
   - component: {fileID: 1026047636}
   - component: {fileID: 1026047635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: right
-  m_TagString: Untagged
+  m_TagString: Boundry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1663,9 +1664,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1436964251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Boundry
-  m_TagString: Untagged
+  m_TagString: Boundry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1698,9 +1699,9 @@ GameObject:
   - component: {fileID: 1445194828}
   - component: {fileID: 1445194827}
   - component: {fileID: 1445194826}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: left
-  m_TagString: Untagged
+  m_TagString: Boundry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1856,9 +1857,9 @@ GameObject:
   - component: {fileID: 1476010064}
   - component: {fileID: 1476010063}
   - component: {fileID: 1476010062}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bottom
-  m_TagString: Untagged
+  m_TagString: Boundry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
