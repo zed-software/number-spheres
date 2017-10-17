@@ -91,8 +91,9 @@ public class BallController : MonoBehaviour {
 /**
  * Uncomment onMouseDown for testing on computers with mouses
  * Comment when building on phones, no mouse events in the code mean better performance on mobile
+ * 
+ * Input detection for if the ballz' collider has been clicked on
  **/
-// Input detection for if the ballz' collider has been clicked on
 	void OnMouseDown()
 	{
 		BallTouched ();		

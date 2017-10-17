@@ -133,7 +133,7 @@ public class GameController : MonoBehaviour {
 		// loop that spawns ballz in array
 		for (int x = 0; x < ballz.Length; x++) 
 		{
-			Vector2 spawnLocation = new Vector2 (Random.Range (spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
+			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
