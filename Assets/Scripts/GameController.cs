@@ -432,7 +432,6 @@ public class GameController : MonoBehaviour {
 		levelTransition.SetActive (false);
 		transitioningLevel = false; // allows ballz to spawn again
 	}
-<<<<<<< HEAD
 
 	public void TimeToAnswer()
 	{
@@ -440,6 +439,3 @@ public class GameController : MonoBehaviour {
 		TimeToAnswerIncrement++;
 	}
 }
-=======
-}
->>>>>>> Johan_Dev_Laptop
