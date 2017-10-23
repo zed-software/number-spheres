@@ -110,7 +110,7 @@ public class BallController : MonoBehaviour {
 
 			bst = Instantiate (ballScoreText, transform.position, Quaternion.identity);
 			bst.GetComponent<TextMesh> ().text = ("+" + Mathf.Round(gc.GetBallScore ()).ToString());
-
+			gc.TimeToAnswer ();
 			gc.ResetBallz (); 		// If this is the correct mathball, the gamecontroller will reset the game
 		}
 		else

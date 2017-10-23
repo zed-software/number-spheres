@@ -10,11 +10,13 @@ using UnityEngine.UI;
 public class GameOverController : MonoBehaviour {
 
 	public Text scoreText;		// Used to display the total user score after losing
+	public Text TimetoAnswer; //Displays average time to answer a question
 
 	// Use this for initialization
 	void Start () 
 	{
-		scoreText.text = ("Score: " + PlayerPrefs.GetString ("Score")); // Sets the text objest to show the score
+		scoreText.text = ("Score: " + PlayerPrefs.GetFloat ("Score")); // Sets the text objest to show the score
+		TimetoAnswer.text = ("Time to Answer: " + (float)Mathf.Round(PlayerPrefs.GetFloat("TimeToAnswer")*10) / 10);
 	}
 	
 	// Waits for the user to tap the screen before reloading the main game scene

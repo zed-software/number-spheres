@@ -52,6 +52,10 @@ public class GameController : MonoBehaviour {
 	private int health;					// Used to keep track of current health
 	private Text levelText;				// Level transition text
 	private bool transitioningLevel;	// Used to stop timer and ballspawnz while the level transition card is up
+	private float TimeToAnswerInitial;
+	private float TimeToAnswerTotal;
+	private int TimeToAnswerIncrement;
+
 
 	void Start () 
 	{
@@ -64,6 +68,11 @@ public class GameController : MonoBehaviour {
 
 		gameOver = false;
 		noBallz = true;
+
+		TimeToAnswerIncrement = 0;
+		TimeToAnswerInitial = 0;
+		TimeToAnswerTotal = 0;
+
 
 		ResetScore();			// Sets score to 0
 		ResetProgress ();		// Sets correct progress clicks to 0 
@@ -182,6 +191,9 @@ public class GameController : MonoBehaviour {
 			Destroy (ballzObjects [x].gameObject);
 		}
 
+		if (gameOver == false) {
+			TimeToAnswerInitial = Time.time;
+		}
 		noBallz = true; // Indicates that all the ballz have been deleted
 	}
 		
@@ -331,8 +343,8 @@ public class GameController : MonoBehaviour {
 		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
 		ResetBallz();		
 
-		PlayerPrefs.SetString ("Score", Mathf.Round(totalScore).ToString()); // Saves the score to a settings file for the game over screen
-
+		PlayerPrefs.SetFloat ("Score", Mathf.Round(totalScore)); // Saves the score to a settings file for the game over screen
+		PlayerPrefs.SetFloat ("TimeToAnswer", TimeToAnswerTotal / TimeToAnswerIncrement);
 		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no waiting makes the transition too abrupt
 	}
 
@@ -401,5 +413,11 @@ public class GameController : MonoBehaviour {
 	{
 		levelTransition.SetActive (false);
 		transitioningLevel = false; // allows ballz to spawn again
+	}
+
+	public void TimeToAnswer()
+	{
+		TimeToAnswerTotal += Time.time - TimeToAnswerInitial;
+		TimeToAnswerIncrement++;
 	}
 }
