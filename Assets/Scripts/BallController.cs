@@ -12,7 +12,7 @@ public class BallController : MonoBehaviour {
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
 	private GameObject explosion;				// Will hold this ballz' explosion particle
-	private GameObject bst;
+	private GameObject bst;						// Ball score text popup
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
 	private TextMesh tm;						// Number text on top of the mathball
@@ -91,12 +91,13 @@ public class BallController : MonoBehaviour {
 /**
  * Uncomment onMouseDown for testing on computers with mouses
  * Comment when building on phones, no mouse events in the code mean better performance on mobile
+ * 
+ * Input detection for if the ballz' collider has been clicked on
  **/
-// Input detection for if the ballz' collider has been clicked on
-	void OnMouseDown()
-	{
-		BallTouched ();		
-	}
+//	void OnMouseDown()
+//	{
+//		BallTouched ();		
+//	}
 
 	public void BallTouched()
 	{

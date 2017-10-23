@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
 	public GameObject[] ballz;			// Array holding mathballz prefabs
 	public GameObject[] powerUps;		// Array holding power up prefabs
 	public GameObject levelTransition;	// Level transition image and text
+	public GameObject speedBonus;		// UI element for the speed bonus
+	public GameObject speedBonusScoreText;
 	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -23,6 +25,7 @@ public class GameController : MonoBehaviour {
 	[Tooltip("Starting health")]
 	public int healthStart;				// The starting health
 	public Slider healthSlider;			// Health bar UI
+	public Slider speedBonusSlider;
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour {
 	[Tooltip("The max range of numbers that are chosen for the problem increases by this much every level up past level 4")]
 	public int problemValueRaise;	
 
+	private GameObject sbst;
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
 	private float scoreStartTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
@@ -116,6 +120,14 @@ public class GameController : MonoBehaviour {
 				{
 					SpawnBallz ();
 				}
+
+				if (speedBonusSlider.IsActive ()) 
+				{
+					speedBonusSlider.value -= Time.deltaTime;
+
+					if (speedBonusSlider.value <= 0)
+						speedBonus.SetActive (false);
+				}
 			} else
 			{ // If the timer runs out or the game is over
 				GameOver ();
@@ -131,6 +143,9 @@ public class GameController : MonoBehaviour {
 	{
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
+		speedBonus.SetActive (true);
+		speedBonusSlider.value = maxSpeedBonus;
+
 		noBallz = false;					// Sets this to false so the game wont spawn more ballz until they are all reset
 		valueAssignedOrder = 0;				// Used when the ballz call the GetBallValue() function to retrieve a value, keeps track of which values have been assigned
 
@@ -142,7 +157,7 @@ public class GameController : MonoBehaviour {
 		// loop that spawns ballz in array
 		for (int x = 0; x < ballz.Length; x++) 
 		{
-			Vector2 spawnLocation = new Vector2 (Random.Range (spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
+			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
@@ -309,6 +324,9 @@ public class GameController : MonoBehaviour {
 		if (scoreSpeedBonus < 1) // If the timer counted past the max multiplier set, the speed bonus is just set to 1x;
 			scoreSpeedBonus = 1;
 
+//		sbst = Instantiate (speedBonusScoreText, speedBonusSlider.transform.position, Quaternion.identity);
+//		sbst.GetComponent<TextMesh> ().text = ("x" + scoreSpeedBonus);
+
 		//Debug.Log ("Timer Combo x" + scoreSpeedBonus);
 	}
 
@@ -414,6 +432,7 @@ public class GameController : MonoBehaviour {
 		levelTransition.SetActive (false);
 		transitioningLevel = false; // allows ballz to spawn again
 	}
+<<<<<<< HEAD
 
 	public void TimeToAnswer()
 	{
@@ -421,3 +440,6 @@ public class GameController : MonoBehaviour {
 		TimeToAnswerIncrement++;
 	}
 }
+=======
+}
+>>>>>>> Johan_Dev_Laptop
