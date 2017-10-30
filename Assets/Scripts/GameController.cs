@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
 	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
 	public Text scoreText;				// Text UI for the the score
 	public Text timerText;				// Text UI for the timer
+	public Text doublePointsText;
 	[Tooltip("Timer starting value, reset to this value when level is changed")]
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
 	[Tooltip("How long (in seconds) the level transitions last")]
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour {
 	private GameObject sbst;
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
+	private float doublePointsTimer;
 	private float scoreStartTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreStopTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreSpeedBonus;		// Used to multiply the score earned by the speed of the player getting answers correct 
@@ -61,6 +63,7 @@ public class GameController : MonoBehaviour {
 	private float TimeToAnswerTotal;
 	private int TimeToAnswerIncrement;
 	private bool isShielded;
+	private bool isDoublePoints;
 
 
 	void Start () 
@@ -85,6 +88,8 @@ public class GameController : MonoBehaviour {
 		ResetProgress ();		// Sets correct progress clicks to 0 
 		ResetCombo();			// Sets the starting combo to 1x
 		ResetHealth();
+
+		DisableDoublePoints ();
 
 		timer = timerValue;		// Sets the timer to its starting value
 
@@ -124,6 +129,7 @@ public class GameController : MonoBehaviour {
 					SpawnBallz ();
 				}
 
+				// Controls the speed bonus slider
 				if (speedBonusSlider.IsActive ()) 
 				{
 					speedBonusSlider.value -= Time.deltaTime;
@@ -131,6 +137,17 @@ public class GameController : MonoBehaviour {
 					if (speedBonusSlider.value <= 0)
 						speedBonus.SetActive (false);
 				}
+
+
+				// Counts down the double points timer
+				if (isDoublePoints)
+				{
+					doublePointsTimer -= Time.deltaTime;
+
+					if (doublePointsTimer <= 0)
+						DisableDoublePoints ();
+				}
+
 			} else
 			{ // If the timer runs out or the game is over
 				GameOver ();
@@ -146,7 +163,7 @@ public class GameController : MonoBehaviour {
 	{
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
-		speedBonus.SetActive (true);
+		speedBonus.SetActive (true);		// Enables the speed bonus UI slider
 		speedBonusSlider.value = maxSpeedBonus;
 
 		noBallz = false;					// Sets this to false so the game wont spawn more ballz until they are all reset
@@ -234,6 +251,10 @@ public class GameController : MonoBehaviour {
 	public void AddScore(int s) 
 	{	
 		score = (s * comboValue * scoreSpeedBonus);
+
+		if (isDoublePoints)
+			score *= 2;
+
 		totalScore += score;
 		UpdateScore ();
 
@@ -391,6 +412,7 @@ public class GameController : MonoBehaviour {
 		shieldIcon.SetActive (false);
 	}
 
+
 	// Called when the timer or health hits 0
 	// Deletes ballz on screen then waits for a second before loading the game over screen with the user's score
 	void GameOver()
@@ -470,9 +492,25 @@ public class GameController : MonoBehaviour {
 		transitioningLevel = false; // allows ballz to spawn again
 	}
 
+
 	public void TimeToAnswer()
 	{
 		TimeToAnswerTotal += Time.time - TimeToAnswerInitial;
 		TimeToAnswerIncrement++;
+	}
+
+
+	public void EnabelDoublePoints()
+	{
+		doublePointsTimer = 10f;
+		doublePointsText.text = "x2";
+		isDoublePoints = true;
+	}
+
+
+	void DisableDoublePoints()
+	{
+		doublePointsText.text = "";
+		isDoublePoints = false;
 	}
 }

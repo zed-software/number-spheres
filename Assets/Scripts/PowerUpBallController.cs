@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpBallController : MonoBehaviour {
 
 	public int speed = 225;
-	[Tooltip("1 for healthball; 2 for shield")]
+	[Tooltip("1 for healthball; 2 for shield; 3 for double points")]
 	public int powerUpID; 		// Set by the prefab of power up, 1 for health;
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
@@ -59,35 +59,24 @@ public class PowerUpBallController : MonoBehaviour {
 		{
 			case 1: // The health ball
 				{
-					HealthPowerUp ();
+					gc.ResetHealth (); // Calls game controller to refill player health to full
 					break;
 				}
 			case 2: // The shield ball
 				{
-					ShieldPowerUp ();
+					gc.AddShield (); // Adds a 1 hit shield to the player health
+					break;
+				}
+			case 3: // Double points ball
+				{
+					gc.EnabelDoublePoints ();
 					break;
 				}
 		}
 
 		Destroy (this.gameObject);
 	}
-
-
-	// Called by the BallTouched function if this is a health power up
-	// Calls game controller to refill player health to full
-	public void HealthPowerUp ()
-	{
-		gc.ResetHealth ();
-	}
-
-
-	// Called by the BallTouched function if this is a Shield power up
-	// Adds a 1 hit shield to the player health
-	public void ShieldPowerUp ()
-	{
-		gc.AddShield ();
-	}
-
+		
 
 	// Called when ballz hit other ballz or boundry colliders
 	void OnCollisionEnter2D (Collision2D coll)
