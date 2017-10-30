@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
-	public GameObject shieldIcon;
+	public GameObject shieldIcon;		// UI icon of shield
 	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
 	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
 	public Text scoreText;				// Text UI for the the score
 	public Text timerText;				// Text UI for the timer
-	public Text doublePointsText;
+	public Text doublePointsText;		// Text UI for when the double points power up is active
 	[Tooltip("Timer starting value, reset to this value when level is changed")]
 	public float timerValue;			// Timer starting value, reset to this value when level is changed
 	[Tooltip("How long (in seconds) the level transitions last")]
@@ -27,21 +27,21 @@ public class GameController : MonoBehaviour {
 	[Tooltip("Starting health")]
 	public int healthStart;				// The starting health
 	public Slider healthSlider;			// Health bar UI
-	public Slider speedBonusSlider;
+	public Slider speedBonusSlider;		// Slider used as visual representation of the speed bonus slider
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
 	[Tooltip("The max combo multiplier achievable for the player")]
 	public int maxCombo;				// The max combo multiplier possible
 	[Tooltip("The maximum speed bonus multiplayer. It degrades per second, until it is 1x")]
-	public int maxSpeedBonus;		
+	public int maxSpeedBonus;			
 	[Tooltip("The max range of numbers that are chosen for the problem increases by this much every level up past level 4")]
 	public int problemValueRaise;	
 
-	private GameObject sbst;
+//	private GameObject sbst;
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
-	private float doublePointsTimer;
+	private float doublePointsTimer;	// Used to keep track of time left for the douple points power up
 	private float scoreStartTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreStopTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreSpeedBonus;		// Used to multiply the score earned by the speed of the player getting answers correct 
@@ -59,11 +59,11 @@ public class GameController : MonoBehaviour {
 	private int health;					// Used to keep track of current health
 	private Text levelText;				// Level transition text
 	private bool transitioningLevel;	// Used to stop timer and ballspawnz while the level transition card is up
-	private float TimeToAnswerInitial;
-	private float TimeToAnswerTotal;
-	private int TimeToAnswerIncrement;
-	private bool isShielded;
-	private bool isDoublePoints;
+	private float timeToAnswerInitial;
+	private float timeToAnswerTotal;
+	private int timeToAnswerIncrement;
+	private bool isShielded;			// Bool to keep track of the shield power up
+	private bool isDoublePoints;		// Bool used to keep track of the double points power up
 
 
 	void Start () 
@@ -79,9 +79,9 @@ public class GameController : MonoBehaviour {
 		noBallz = true;
 		isShielded = false;
 
-		TimeToAnswerIncrement = 0;
-		TimeToAnswerInitial = 0;
-		TimeToAnswerTotal = 0;
+		timeToAnswerIncrement = 0;
+		timeToAnswerInitial = 0;
+		timeToAnswerTotal = 0;
 
 
 		ResetScore();			// Sets score to 0
@@ -182,6 +182,11 @@ public class GameController : MonoBehaviour {
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
 
+
+
+		/////////////////////
+		/// Power ups
+		////////////////////
 		if (levelProgressClicks > 0) // Stops power ups from spawning with the first wave of ballz every level, power ups only spawn with correct clicks
 		{
 			// 10% chance of spawning a power up
@@ -198,6 +203,9 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+
+	// Spawns a random power up in the power up array
+	// Parameters are the range within the power ups array that can be chosen
 	void SpawnPowerUp(int rangeMin, int rangeMax)
 	{
 		Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
@@ -240,8 +248,9 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (gameOver == false) {
-			TimeToAnswerInitial = Time.time;
+			timeToAnswerInitial = Time.time;
 		}
+
 		noBallz = true; // Indicates that all the ballz have been deleted
 	}
 		
@@ -372,7 +381,7 @@ public class GameController : MonoBehaviour {
 	// Reduces health variable by 1 and if health reaches 0, it deletes the balls and causes a game over
 	public void LoseHealth()
 	{
-		if(isShielded)
+		if(isShielded)  // Checks if shield power up is active
 		{
 			RemoveShield ();
 		}
@@ -397,7 +406,8 @@ public class GameController : MonoBehaviour {
 		healthSlider.value = health;
 	}
 
-
+	// Enables the shield power up and draws the icon
+	// Public because it is called in PowerUpBallController
 	public void AddShield ()
 	{
 		isShielded = true;
@@ -406,6 +416,7 @@ public class GameController : MonoBehaviour {
 	}
 
 
+	// Disables shield icon and stops drawing the icon
 	void RemoveShield()
 	{
 		isShielded = false;
@@ -421,7 +432,7 @@ public class GameController : MonoBehaviour {
 		ResetBallz();		
 
 		PlayerPrefs.SetFloat ("Score", Mathf.Round(totalScore)); // Saves the score to a settings file for the game over screen
-		PlayerPrefs.SetFloat ("TimeToAnswer", TimeToAnswerTotal / TimeToAnswerIncrement);
+		PlayerPrefs.SetFloat ("TimeToAnswer", timeToAnswerTotal / timeToAnswerIncrement);
 		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no waiting makes the transition too abrupt
 	}
 
@@ -495,11 +506,13 @@ public class GameController : MonoBehaviour {
 
 	public void TimeToAnswer()
 	{
-		TimeToAnswerTotal += Time.time - TimeToAnswerInitial;
-		TimeToAnswerIncrement++;
+		timeToAnswerTotal += Time.time - timeToAnswerInitial;
+		timeToAnswerIncrement++;
 	}
 
 
+	// Public function called by power up ball controller
+	// Sets the timer and text for the double points power up affect
 	public void EnabelDoublePoints()
 	{
 		doublePointsTimer = 10f;
@@ -508,6 +521,7 @@ public class GameController : MonoBehaviour {
 	}
 
 
+	// Called once the double points timer hits 0
 	void DisableDoublePoints()
 	{
 		doublePointsText.text = "";

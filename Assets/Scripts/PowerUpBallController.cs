@@ -6,7 +6,7 @@ public class PowerUpBallController : MonoBehaviour {
 
 	public int speed = 225;
 	[Tooltip("1 for healthball; 2 for shield; 3 for double points")]
-	public int powerUpID; 		// Set by the prefab of power up, 1 for health;
+	public int powerUpID; 		// Set by the prefab of power up, 1 for health; 2 for shield; 3 for double points;
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
@@ -51,8 +51,8 @@ public class PowerUpBallController : MonoBehaviour {
 	}
 
 
-	// Fills the players health
-	// Function needs to be changed when there are more power ups
+	// Called when the ball is touched or clicked
+	// What it does depends on the type of power up it is, checks the powerUpID
 	public void BallTouched()
 	{
 		switch (powerUpID)
@@ -69,49 +69,28 @@ public class PowerUpBallController : MonoBehaviour {
 				}
 			case 3: // Double points ball
 				{
-					gc.EnabelDoublePoints ();
+					gc.EnabelDoublePoints (); // Enables a 2x multiplier for correct answers for 10 seconds
 					break;
 				}
 		}
 
-		Destroy (this.gameObject);
+		Destroy (this.gameObject); // This will probably be changed when there are explosion effects for power ups
 	}
 		
 
 	// Called when ballz hit other ballz or boundry colliders
 	void OnCollisionEnter2D (Collision2D coll)
 	{
-//		Debug.Log(coll.gameObject.tag.ToString ());
-//		if (coll.gameObject.CompareTag("Boundry") && !isInBoundry)
-//		{
-////			Debug.Log ("test");
-//			Physics2D.IgnoreCollision(coll.collider, this.GetComponent<Collider2D>());
-//			Push ();
-//		}
-//		else
-//		{
-			Vector2 direction = coll.contacts[0].point - new Vector2 (transform.position.x, transform.position.y); // Calculates angle between the collision point and the object
-			direction = direction.normalized * -1; // Sets the magnitude of the angle to 1 and flips it
+		Vector2 direction = coll.contacts[0].point - new Vector2 (transform.position.x, transform.position.y); // Calculates angle between the collision point and the object
+		direction = direction.normalized * -1; // Sets the magnitude of the angle to 1 and flips it
 
-			// Sometimes the ballz spawn already colliding with another object and this function is called before Start() can set the rigidbody component, so this checks for that and avoids an error message
-			if(rb == null)
-				rb = GetComponent<Rigidbody2D> ();
+		// Sometimes the ballz spawn already colliding with another object and this function is called before Start() can set the rigidbody component, so this checks for that and avoids an error message
+		if(rb == null)
+			rb = GetComponent<Rigidbody2D> ();
 
-			rb.AddForce (direction * speed); // Adds force in the new direction, pushing away our ball
-//		}
+		rb.AddForce (direction * speed); // Adds force in the new direction, pushing away our ball
+
 	}
-
-
-//	void OnCollisionExit2D (Collision2D coll)
-//	{
-//		if (coll.gameObject.CompareTag("Boundry") && !isInBoundry)
-//		{
-//			Debug.Log ("test");
-//			this.GetComponent<Collider2D> ().isTrigger = false; 
-////			Physics2D.IgnoreCollision(coll.collider, this.GetComponent<Collider2D>(), false);
-//			isInBoundry = true;
-//		}
-//	}
 
 
 	// When the ball detects it has stopped touching the boundary after passing into it, it stops being a trigger and collides off objects again
@@ -119,7 +98,6 @@ public class PowerUpBallController : MonoBehaviour {
 	{
 		if (coll.gameObject.CompareTag("Boundry") && !isInBoundry)
 		{
-//			Debug.Log ("test");
 			this.GetComponent<Collider2D> ().isTrigger = false; 
 			isInBoundry = true;
 		}
