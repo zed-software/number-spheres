@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
+	public GameObject shieldIcon;
 	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
 	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -59,6 +60,7 @@ public class GameController : MonoBehaviour {
 	private float TimeToAnswerInitial;
 	private float TimeToAnswerTotal;
 	private int TimeToAnswerIncrement;
+	private bool isShielded;
 
 
 	void Start () 
@@ -72,6 +74,7 @@ public class GameController : MonoBehaviour {
 
 		gameOver = false;
 		noBallz = true;
+		isShielded = false;
 
 		TimeToAnswerIncrement = 0;
 		TimeToAnswerInitial = 0;
@@ -162,16 +165,29 @@ public class GameController : MonoBehaviour {
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
 
-		//Used to spawn health balls every 5 levels, at the beginning of the level
-		//Currently programmed to pick a random power up from the power up array, but only one exits so far
-		if ((level % 5 == 0) && levelProgressClicks == 0)
+		if (levelProgressClicks > 0) // Stops power ups from spawning with the first wave of ballz every level, power ups only spawn with correct clicks
 		{
-			Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
-			Instantiate(powerUps[Random.Range(0, powerUps.Length)], spawnLocation, Quaternion.identity);
+			// 10% chance of spawning a power up
+			if (Random.value > 0.9f)
+			{
+				SpawnPowerUp (1, powerUps.Length);
+			}
+
+			// If health is at 2, 5% chance of health spawning; if health is at 1, 15% chance of health spawning 
+			if ((health == 2 && Random.value > 0.95f) || (health == 1 && Random.value > 0.85f))
+			{		
+				SpawnPowerUp (0, 0); // First slot in the power ups array is the health ball, so the range here is 0 to 0
+			}
 		}
 	}
-		
 
+	void SpawnPowerUp(int rangeMin, int rangeMax)
+	{
+		Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
+		Instantiate (powerUps [Random.Range (rangeMin, rangeMax)], spawnLocation, Quaternion.identity);
+	}
+
+		
 	// Public function called by ballz when they spawn to get assigned a value
 	// This function returns an array with 2 slots, 1st slot has the number value, second slot tells if its the correct answer to the problem
 	public int[] GetBallValue()
@@ -335,12 +351,19 @@ public class GameController : MonoBehaviour {
 	// Reduces health variable by 1 and if health reaches 0, it deletes the balls and causes a game over
 	public void LoseHealth()
 	{
-		health -= 1;
+		if(isShielded)
+		{
+			RemoveShield ();
+		}
+		else
+		{
+			health -= 1;
 
-		healthSlider.value = health; // Sets UI health bar to current health
+			healthSlider.value = health; // Sets UI health bar to current health
 
-		if (health == 0) {
-			GameOver ();
+			if (health == 0) {
+				GameOver ();
+			}
 		}
 	}
 		
@@ -353,6 +376,20 @@ public class GameController : MonoBehaviour {
 		healthSlider.value = health;
 	}
 
+
+	public void AddShield ()
+	{
+		isShielded = true;
+		shieldIcon.SetActive (true);
+
+	}
+
+
+	void RemoveShield()
+	{
+		isShielded = false;
+		shieldIcon.SetActive (false);
+	}
 
 	// Called when the timer or health hits 0
 	// Deletes ballz on screen then waits for a second before loading the game over screen with the user's score

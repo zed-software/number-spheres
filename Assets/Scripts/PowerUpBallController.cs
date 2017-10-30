@@ -5,6 +5,8 @@ using UnityEngine;
 public class PowerUpBallController : MonoBehaviour {
 
 	public int speed = 225;
+	[Tooltip("1 for healthball; 2 for shield")]
+	public int powerUpID; 		// Set by the prefab of power up, 1 for health;
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
@@ -53,8 +55,37 @@ public class PowerUpBallController : MonoBehaviour {
 	// Function needs to be changed when there are more power ups
 	public void BallTouched()
 	{
-		gc.ResetHealth ();
+		switch (powerUpID)
+		{
+			case 1: // The health ball
+				{
+					HealthPowerUp ();
+					break;
+				}
+			case 2: // The shield ball
+				{
+					ShieldPowerUp ();
+					break;
+				}
+		}
+
 		Destroy (this.gameObject);
+	}
+
+
+	// Called by the BallTouched function if this is a health power up
+	// Calls game controller to refill player health to full
+	public void HealthPowerUp ()
+	{
+		gc.ResetHealth ();
+	}
+
+
+	// Called by the BallTouched function if this is a Shield power up
+	// Adds a 1 hit shield to the player health
+	public void ShieldPowerUp ()
+	{
+		gc.AddShield ();
 	}
 
 
