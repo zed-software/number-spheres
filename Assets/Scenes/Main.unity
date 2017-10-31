@@ -280,6 +280,7 @@ MonoBehaviour:
   - {fileID: 1467439997060608, guid: e8791d1ea6b64bb46b5567d66e7a90bd, type: 2}
   - {fileID: 1597554242678478, guid: 0110ce37ccc22ff47b2da32ef65ed25a, type: 2}
   - {fileID: 1903571564137508, guid: bcfa20275cb2c5342afe2bedc6a31963, type: 2}
+  - {fileID: 1576936706065554, guid: 559ba93dee019c3439076a2fa07ad20c, type: 2}
   levelTransition: {fileID: 640503489}
   speedBonus: {fileID: 1208119444}
   speedBonusScoreText: {fileID: 1645130186016710, guid: 05863d7c1a243f145ba3e8e5919b17cd,

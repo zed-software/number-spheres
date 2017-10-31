@@ -8,6 +8,7 @@ public class BallController : MonoBehaviour {
 	public GameObject explosion_correct;		// The correct explosion prefab goes here
 	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
 	public GameObject ballScoreText;
+	public GameObject frozenIcon;
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
@@ -39,7 +40,7 @@ public class BallController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		tm.transform.rotation = Quaternion.identity;
+		tm.transform.rotation = Quaternion.identity; // Keeps the number text mesh on the ball from rotating with the ball
 	}
 
 
@@ -125,5 +126,10 @@ public class BallController : MonoBehaviour {
 	public void Explode()
 	{
 		Instantiate (explosion, transform.position, transform.rotation);
+	}
+
+	public void SetFrozenIcon(bool b)
+	{
+		frozenIcon.SetActive (b);
 	}
 }

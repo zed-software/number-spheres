@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpBallController : MonoBehaviour {
 
 	public int speed = 225;
-	[Tooltip("1 for healthball; 2 for shield; 3 for double points")]
+	[Tooltip("1 for healthball; 2 for shield; 3 for double points; 4 for freeze")]
 	public int powerUpID; 		// Set by the prefab of power up, 1 for health; 2 for shield; 3 for double points;
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
@@ -70,6 +70,11 @@ public class PowerUpBallController : MonoBehaviour {
 			case 3: // Double points ball
 				{
 					gc.EnabelDoublePoints (); // Enables a 2x multiplier for correct answers for 10 seconds
+					break;
+				}
+			case 4: // Freeze ball
+				{
+					gc.EnableFreeze ();
 					break;
 				}
 		}

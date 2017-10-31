@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
 	private float doublePointsTimer;	// Used to keep track of time left for the douple points power up
+	private float freezeTimer;
 	private float scoreStartTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreStopTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreSpeedBonus;		// Used to multiply the score earned by the speed of the player getting answers correct 
@@ -64,6 +65,7 @@ public class GameController : MonoBehaviour {
 	private int timeToAnswerIncrement;
 	private bool isShielded;			// Bool to keep track of the shield power up
 	private bool isDoublePoints;		// Bool used to keep track of the double points power up
+	private bool isFrozen;
 
 
 	void Start () 
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour {
 		gameOver = false;
 		noBallz = true;
 		isShielded = false;
+		isFrozen = false;
 
 		timeToAnswerIncrement = 0;
 		timeToAnswerInitial = 0;
@@ -148,6 +151,17 @@ public class GameController : MonoBehaviour {
 						DisableDoublePoints ();
 				}
 
+
+				// Counts down the freeze timer
+				if (isFrozen)
+				{
+					freezeTimer -= Time.deltaTime;
+
+					if (freezeTimer <= 0)
+						DisableFreeze ();
+				}
+
+
 			} else
 			{ // If the timer runs out or the game is over
 				GameOver ();
@@ -182,21 +196,33 @@ public class GameController : MonoBehaviour {
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 		}
 
-
-
 		/////////////////////
 		/// Power ups
 		////////////////////
+
+
+		// If the freeze power up is active, this will lower the mass of the new ballz and slow them down
+		if (isFrozen)
+		{
+			FreezeBallz ();
+		}
+
+
 		if (levelProgressClicks > 0) // Stops power ups from spawning with the first wave of ballz every level, power ups only spawn with correct clicks
 		{
-			// 10% chance of spawning a power up
-			if (Random.value > 0.9f)
+			float randomPowerUpSeed = Random.value;
+			Debug.Log ("Random Seed: " + randomPowerUpSeed);
+
+			// 20% chance of spawning a power up
+			if (randomPowerUpSeed > 0.8f)
 			{
 				SpawnPowerUp (1, powerUps.Length);
 			}
 
+			randomPowerUpSeed = Random.value; // Reroll for health
+
 			// If health is at 2, 5% chance of health spawning; if health is at 1, 15% chance of health spawning 
-			if ((health == 2 && Random.value > 0.95f) || (health == 1 && Random.value > 0.85f))
+			if ((health == 2 && randomPowerUpSeed > 0.95f) || (health == 1 && randomPowerUpSeed > 0.85f))
 			{		
 				SpawnPowerUp (0, 0); // First slot in the power ups array is the health ball, so the range here is 0 to 0
 			}
@@ -208,8 +234,11 @@ public class GameController : MonoBehaviour {
 	// Parameters are the range within the power ups array that can be chosen
 	void SpawnPowerUp(int rangeMin, int rangeMax)
 	{
+		int powerUpIDRandomSeed = Random.Range (rangeMin, rangeMax);
+		Debug.Log ("Random Power Up: " + powerUpIDRandomSeed);
+
 		Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
-		Instantiate (powerUps [Random.Range (rangeMin, rangeMax)], spawnLocation, Quaternion.identity);
+		Instantiate (powerUps [powerUpIDRandomSeed], spawnLocation, Quaternion.identity);
 	}
 
 		
@@ -526,5 +555,47 @@ public class GameController : MonoBehaviour {
 	{
 		doublePointsText.text = "";
 		isDoublePoints = false;
+	}
+
+
+	public void EnableFreeze()
+	{
+		Debug.Log ("Enable Freeze");
+
+		isFrozen = true;
+		freezeTimer = 10;
+
+		FreezeBallz ();
+	}
+
+
+	void FreezeBallz()
+	{
+		for (int x = 0; x < ballz.Length; x++) 
+		{	
+			if (ballzObjects [x] != null)
+			{
+				ballzObjects [x].gameObject.GetComponent<Rigidbody2D> ().mass = 10;
+				ballzObjects [x].gameObject.GetComponent<BallController> ().SetFrozenIcon (true);
+			}
+			
+		}
+	}
+
+
+	void DisableFreeze()
+	{
+		Debug.Log ("Disable Freeze");
+
+		isFrozen = false;
+
+		for (int x = 0; x < ballz.Length; x++) 
+		{	
+			if (ballzObjects [x] != null)
+			{
+				ballzObjects [x].gameObject.GetComponent<Rigidbody2D> ().mass = 1;
+				ballzObjects [x].gameObject.GetComponent<BallController> ().SetFrozenIcon (false);
+			}
+		}
 	}
 }
