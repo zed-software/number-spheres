@@ -77,6 +77,11 @@ public class PowerUpBallController : MonoBehaviour {
 					gc.EnableFreeze ();
 					break;
 				}
+			case 5: // Extra time ball
+				{
+					gc.AddBonusTime (10);
+					break;
+				}
 		}
 
 		Destroy (this.gameObject); // This will probably be changed when there are explosion effects for power ups

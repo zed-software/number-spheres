@@ -122,7 +122,7 @@ public class GameController : MonoBehaviour {
 				if (bonusTime > 0)
 				{
 					bonusTime -= Time.deltaTime;
-					bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString () + "!");
+					bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString ());
 				} else
 				{ // No bonus time means the main timer counts down
 					timer -= Time.deltaTime;
@@ -361,7 +361,7 @@ public class GameController : MonoBehaviour {
 
 			lc.SetLevel (level); // Letting the level controller know what level it is now
 
-			bonusTime += timer; // Any remaining time is added to the bonus time
+//			bonusTime += timer; // Any remaining time is added to the bonus time
 			timer = timerValue;	// Main timer is reset
 		}
 	}
@@ -605,5 +605,11 @@ public class GameController : MonoBehaviour {
 				ballzObjects [x].gameObject.GetComponent<BallController> ().SetFrozenIcon (false);
 			}
 		}
+	}
+
+
+	public void AddBonusTime(int t)
+	{
+		bonusTime = t;
 	}
 }
