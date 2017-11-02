@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
 	public GameObject speedBonusScoreText;
 	public GameObject shieldIcon;		// UI icon of shield
 	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
-	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
+//	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
 	public Text comboText;				// Text that displays the combo multiplier
 	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
@@ -66,10 +66,18 @@ public class GameController : MonoBehaviour {
 	private bool isShielded;			// Bool to keep track of the shield power up
 	private bool isDoublePoints;		// Bool used to keep track of the double points power up
 	private bool isFrozen;
+	private Vector2 spawnValue;
 
 
 	void Start () 
 	{
+		// Calculates the ball spawning range based on the screen resolution
+		float ballzRadius = (transform.localScale.x / 2f);
+		float spawnHeight = (Camera.main.orthographicSize) - ballzRadius - 1.3f; // Subtracting 1.3 to adjust for the UI
+		float spawnWidth = (spawnHeight * Screen.width / Screen.height) - ballzRadius;
+
+		spawnValue = new Vector2 (spawnWidth, spawnHeight);
+
 		bonusTime = 0;
 
 		// Set to first level
