@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58925154865843064}
   - component: {fileID: 114136251055938724}
   - component: {fileID: 114460587646250034}
+  - component: {fileID: 122703696720050698}
   m_Layer: 2
   m_Name: Extra Time Ball
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
+--- !u!122 &122703696720050698
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1056675916831358}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294949631
+  m_Size: 1.7
 --- !u!212 &212453706616280804
 SpriteRenderer:
   m_ObjectHideFlags: 1

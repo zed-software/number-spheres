@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 58390552646419758}
   - component: {fileID: 114165723065650052}
   - component: {fileID: 114751539333529344}
+  - component: {fileID: 122549711943620844}
   m_Layer: 2
   m_Name: Shield Ball
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
+--- !u!122 &122549711943620844
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1597554242678478}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190335
+  m_Size: 1.7
 --- !u!212 &212701794594144762
 SpriteRenderer:
   m_ObjectHideFlags: 1

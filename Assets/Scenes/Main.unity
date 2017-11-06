@@ -281,6 +281,7 @@ MonoBehaviour:
   - {fileID: 1597554242678478, guid: 0110ce37ccc22ff47b2da32ef65ed25a, type: 2}
   - {fileID: 1903571564137508, guid: bcfa20275cb2c5342afe2bedc6a31963, type: 2}
   - {fileID: 1576936706065554, guid: 559ba93dee019c3439076a2fa07ad20c, type: 2}
+  - {fileID: 1056675916831358, guid: 0708f5f05ea1e5a4db00df925eec4c97, type: 2}
   levelTransition: {fileID: 640503489}
   speedBonus: {fileID: 1208119444}
   speedBonusScoreText: {fileID: 1645130186016710, guid: 05863d7c1a243f145ba3e8e5919b17cd,
@@ -1853,7 +1854,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3

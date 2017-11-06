@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 58258549177095096}
   - component: {fileID: 114403129138569454}
   - component: {fileID: 114293538590006932}
+  - component: {fileID: 122129540694267014}
   m_Layer: 2
   m_Name: Freeze Ball
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 225
   powerUpID: 4
+--- !u!122 &122129540694267014
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1576936706065554}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4293000986
+  m_Size: 1.7
 --- !u!212 &212015257564581438
 SpriteRenderer:
   m_ObjectHideFlags: 1

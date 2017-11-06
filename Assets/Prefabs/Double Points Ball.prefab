@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 58784721646584346}
   - component: {fileID: 114080410495047316}
   - component: {fileID: 114363327124898046}
+  - component: {fileID: 122024116072626752}
   m_Layer: 2
   m_Name: Double Points Ball
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
+--- !u!122 &122024116072626752
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903571564137508}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4292215039
+  m_Size: 1.7
 --- !u!212 &212938722373162794
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 58873757179815266}
   - component: {fileID: 114886042895628570}
   - component: {fileID: 114562320358558670}
+  - component: {fileID: 122920620591259592}
   m_Layer: 2
   m_Name: Health Ball
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 225
   powerUpID: 1
+--- !u!122 &122920620591259592
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1467439997060608}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278255360
+  m_Size: 1.7
 --- !u!212 &212277700971131280
 SpriteRenderer:
   m_ObjectHideFlags: 1
