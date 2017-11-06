@@ -29,8 +29,8 @@ public class GameOverController : MonoBehaviour {
 //				SceneManager.LoadScene (1);
 //			}
 //		}
-
-		if(Input.touchCount > 0)
-			SceneManager.LoadScene (1);
+//
+//		if(Input.touchCount > 0)
+//			SceneManager.LoadScene (1);
 	}
 }
