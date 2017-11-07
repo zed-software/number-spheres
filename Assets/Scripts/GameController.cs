@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
 
 	public GameObject[] ballz;			// Array holding mathballz prefabs
 	public GameObject[] powerUps;		// Array holding power up prefabs
+	public Material[] ballMaterials;
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
@@ -183,6 +184,8 @@ public class GameController : MonoBehaviour {
 	// This function also calls the LevelController to generate problems and values for the ballz
 	void SpawnBallz()
 	{
+		ShuffleArray (ballMaterials);
+
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
 		speedBonus.SetActive (true);		// Enables the speed bonus UI slider
@@ -202,6 +205,7 @@ public class GameController : MonoBehaviour {
 			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
+			ballzObjects[x].GetComponentInChildren<MeshRenderer>().material = ballMaterials[x];
 		}
 
 		/////////////////////
@@ -611,5 +615,17 @@ public class GameController : MonoBehaviour {
 	public void AddBonusTime(int t)
 	{
 		bonusTime = t;
+	}
+
+
+	void ShuffleArray<T>(T[] arr) 
+	{
+		for (int i = arr.Length - 1; i > 0; i--) 
+		{
+			int r = Random.Range(0, i + 1);
+			T tmp = arr[i];
+			arr[i] = arr[r];
+			arr[r] = tmp;
+		}
 	}
 }
