@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 	public GameObject[] ballz;			// Array holding mathballz prefabs
 	public GameObject[] powerUps;		// Array holding power up prefabs
 	public Material[] ballMaterials;
+	public Sprite[] ballFaces;
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
@@ -184,7 +185,8 @@ public class GameController : MonoBehaviour {
 	// This function also calls the LevelController to generate problems and values for the ballz
 	void SpawnBallz()
 	{
-		ShuffleArray (ballMaterials);
+		ShuffleArray (ballMaterials);		// Randomizes the array of ball color materials
+		ShuffleArray (ballFaces);			// Randomizes the array of ball faces
 
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
@@ -205,7 +207,9 @@ public class GameController : MonoBehaviour {
 			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
-			ballzObjects[x].GetComponentInChildren<MeshRenderer>().material = ballMaterials[x];
+
+			ballzObjects[x].GetComponentInChildren<MeshRenderer> ().material = ballMaterials[x];
+			ballzObjects [x].GetComponentInChildren<SpriteRenderer> ().sprite = ballFaces [x];
 		}
 
 		/////////////////////
@@ -233,8 +237,8 @@ public class GameController : MonoBehaviour {
 
 			randomPowerUpSeed = Random.value; // Reroll for health
 
-			// If health is at 2, 5% chance of health spawning; if health is at 1, 15% chance of health spawning 
-			if ((health == 2 && randomPowerUpSeed > 0.95f) || (health == 1 && randomPowerUpSeed > 0.85f))
+			// If health is at 2, 10% chance of health spawning; if health is at 1, 20% chance of health spawning 
+			if ((health == 2 && randomPowerUpSeed > 0.90f) || (health == 1 && randomPowerUpSeed > 0.80f))
 			{		
 				SpawnPowerUp (0, 0); // First slot in the power ups array is the health ball, so the range here is 0 to 0
 			}
@@ -627,5 +631,12 @@ public class GameController : MonoBehaviour {
 			arr[i] = arr[r];
 			arr[r] = tmp;
 		}
+	}
+
+
+	// Used by the power ups when they spawn, assigns a random face sprite
+	public Sprite GetRandomFace()
+	{
+		return ballFaces[Random.Range(0, ballFaces.Length)];
 	}
 }
