@@ -24,7 +24,7 @@ public class PowerUpBallController : MonoBehaviour {
 		isInBoundry = false;				// The gamecontroller should spawn power ups outside the boundary
 		this.GetComponent<Collider2D> ().isTrigger = true;	// Sets the power up collider to a trigger, so that it will go through the boundry
 
-		SetFace ();
+//		SetFace ();
 		Push();			// Pushes power up towards the game center
 	}
 	
@@ -90,10 +90,10 @@ public class PowerUpBallController : MonoBehaviour {
 
 
 
-	void SetFace()
-	{
-		GetComponentInChildren<SpriteRenderer> ().sprite = gc.GetRandomFace ();
-	}
+//	void SetFace()
+//	{
+//		GetComponentInChildren<SpriteRenderer> ().sprite = gc.GetRandomFace ();
+//	}
 		
 
 	// Called when ballz hit other ballz or boundry colliders

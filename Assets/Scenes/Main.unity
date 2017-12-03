@@ -192,7 +192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &162388780
 Light:
   m_ObjectHideFlags: 0
@@ -283,11 +283,11 @@ MonoBehaviour:
   - {fileID: 1576936706065554, guid: 559ba93dee019c3439076a2fa07ad20c, type: 2}
   - {fileID: 1056675916831358, guid: 0708f5f05ea1e5a4db00df925eec4c97, type: 2}
   ballMaterials:
-  - {fileID: 2100000, guid: 7db0fc93420f6cf4187495e7609f1f35, type: 2}
-  - {fileID: 2100000, guid: abdefa9627e0f4b4b92581b7d21a761e, type: 2}
-  - {fileID: 2100000, guid: 801ab6aa9757b7a46a45a3d52f77642e, type: 2}
-  - {fileID: 2100000, guid: 3604e8e209a24664bbeda8676608df55, type: 2}
-  - {fileID: 2100000, guid: 05e0d8f95fcb36c49aa9bfb7c6bbe188, type: 2}
+  - {fileID: 2100000, guid: 1d52b2018883687468a8feecb24ea622, type: 2}
+  - {fileID: 2100000, guid: b561a12bd71429b48946f3f5778713c6, type: 2}
+  - {fileID: 2100000, guid: 72e468f542e599641b71aea413dcd0c4, type: 2}
+  - {fileID: 2100000, guid: 693c7612203d04f4a9c568d3aa18f1ce, type: 2}
+  - {fileID: 2100000, guid: db98ebc99a65c9347aa153d44482d9fa, type: 2}
   ballFaces:
   - {fileID: 21300000, guid: 6b98c60ba3b92a841af3ea01092c17e3, type: 3}
   - {fileID: 21300000, guid: fcc5b707998274b499ef7e068afcbf2d, type: 3}
@@ -1401,7 +1401,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 047a0ed45e6999042873138e1169088d, type: 2}
+  - {fileID: 2100000, guid: 5bac82665ff07ff4b9464f3c6c9064a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

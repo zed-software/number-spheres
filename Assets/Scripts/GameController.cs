@@ -635,8 +635,8 @@ public class GameController : MonoBehaviour {
 
 
 	// Used by the power ups when they spawn, assigns a random face sprite
-	public Sprite GetRandomFace()
-	{
-		return ballFaces[Random.Range(0, ballFaces.Length)];
-	}
+//	public Sprite GetRandomFace()
+//	{
+//		return ballFaces[Random.Range(0, ballFaces.Length)];
+//	}
 }
