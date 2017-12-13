@@ -288,6 +288,12 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 72e468f542e599641b71aea413dcd0c4, type: 2}
   - {fileID: 2100000, guid: 693c7612203d04f4a9c568d3aa18f1ce, type: 2}
   - {fileID: 2100000, guid: db98ebc99a65c9347aa153d44482d9fa, type: 2}
+  backgroundMaterials:
+  - {fileID: 2100000, guid: b3726b682a6466b4a8bf6ce17bfb90c2, type: 2}
+  - {fileID: 2100000, guid: e1e45e55ca6223a4cb281f4aca56f4f8, type: 2}
+  - {fileID: 2100000, guid: 8bf0ddaaae6eb194ea80e6821f9727ab, type: 2}
+  - {fileID: 2100000, guid: 058cad68c14dace4b94da718629fcf74, type: 2}
+  - {fileID: 2100000, guid: 8ffc22bed139bff40bd8dfb8bcbd322e, type: 2}
   ballFaces:
   - {fileID: 21300000, guid: 6b98c60ba3b92a841af3ea01092c17e3, type: 3}
   - {fileID: 21300000, guid: fcc5b707998274b499ef7e068afcbf2d, type: 3}
@@ -301,6 +307,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 182e7b74f94fe7649b831a56199fe835, type: 3}
   - {fileID: 21300000, guid: 90cb0dc4d55e13047a073481fc1c2cb8, type: 3}
   - {fileID: 21300000, guid: e73a9df9e07b5394c978e8989ab3d5be, type: 3}
+  backGround: {fileID: 1104097158}
   levelTransition: {fileID: 640503489}
   speedBonus: {fileID: 1208119444}
   speedBonusScoreText: {fileID: 1645130186016710, guid: 05863d7c1a243f145ba3e8e5919b17cd,
@@ -1401,7 +1408,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5bac82665ff07ff4b9464f3c6c9064a5, type: 2}
+  - {fileID: 2100000, guid: 8ffc22bed139bff40bd8dfb8bcbd322e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

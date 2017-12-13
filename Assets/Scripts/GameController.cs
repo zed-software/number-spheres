@@ -9,7 +9,9 @@ public class GameController : MonoBehaviour {
 	public GameObject[] ballz;			// Array holding mathballz prefabs
 	public GameObject[] powerUps;		// Array holding power up prefabs
 	public Material[] ballMaterials;
+	public Material[] backgroundMaterials;
 	public Sprite[] ballFaces;
+	public GameObject backGround;
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
@@ -365,7 +367,13 @@ public class GameController : MonoBehaviour {
 			if (level > 4)
 			{
 				lc.RaiseMaxProblemValues (problemValueRaise);
-			}
+//				backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [4];
+			} 
+//			else
+//			{
+//				//Debug.Log ("TEST");
+//				backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [level - 1];
+//			}
 
 			lc.SetLevel (level); // Letting the level controller know what level it is now
 
@@ -537,6 +545,14 @@ public class GameController : MonoBehaviour {
 
 		levelText.text = "Level " + level + "\n" + levelOperator;
 		levelTransition.SetActive (true);	// Turns on the level up UI
+
+		if (level < 5)
+		{
+			backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [level - 1];
+		} else
+		{
+			backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [backgroundMaterials.Length - 1];
+		}
 
 		Invoke ("HideLevelTransition", levelStartDelay); // Invoke is a way to wait before calling a function 
 	}
