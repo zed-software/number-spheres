@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 	public int healthStart;				// The starting health
 	public Slider healthSlider;			// Health bar UI
 	public Slider speedBonusSlider;		// Slider used as visual representation of the speed bonus slider
+	public Slider timerSlider;			// Slider used as visual representation of the game timer
+	public Slider bonusTimeSlider;		// Time bonus power up slider
 
 	[Tooltip("Amount of correct Ballz clicked before the lvl up")]
 	public int totalLevelProgressClicks;// The amount of correct clicks before the level progresses
@@ -107,6 +109,8 @@ public class GameController : MonoBehaviour {
 		DisableDoublePoints ();
 
 		timer = timerValue;		// Sets the timer to its starting value
+		timerSlider.maxValue = timerValue;
+		timerSlider.value = timerSlider.maxValue;
 
 		levelText = levelTransition.GetComponentInChildren<Text> ();
 
@@ -126,17 +130,21 @@ public class GameController : MonoBehaviour {
 				if (bonusTime > 0)
 				{
 					bonusTime -= Time.deltaTime;
-					bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString ());
+					bonusTimeSlider.value = bonusTime;
+					//bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString ());
 				} else
 				{ // No bonus time means the main timer counts down
+					bonusTimeSlider.gameObject.SetActive(false);
 					timer -= Time.deltaTime;
-					bonusTimeText.text = ("");
+					//bonusTimeText.text = ("");
 				}
 
-				if (timer >= 10)//Place holder timer until actual 0:20 format can be coded
-					timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
-				else
-					timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
+				timerSlider.value = timer;
+
+//				if (timer >= 10)//Place holder timer until actual 0:20 format can be coded
+//					timerText.text = ("0:" + Mathf.Round (timer).ToString ()); // Rounds the timer value and displays it on the timer UI
+//				else
+//					timerText.text = ("0:0" + Mathf.Round (timer).ToString ());
 
 				// If ballz have just been deleted, more are spawned
 				if (noBallz)
@@ -635,6 +643,10 @@ public class GameController : MonoBehaviour {
 	public void AddBonusTime(int t)
 	{
 		bonusTime = t;
+		bonusTimeSlider.maxValue = bonusTime;
+		bonusTimeSlider.value = bonusTime;
+
+		bonusTimeSlider.gameObject.SetActive (true);
 	}
 
 
