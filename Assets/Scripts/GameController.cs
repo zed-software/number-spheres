@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Advertisements;
 
 public class GameController : MonoBehaviour {
 
@@ -502,7 +503,10 @@ public class GameController : MonoBehaviour {
 	IEnumerator WaitForGameOver()
 	{
 		yield return new WaitForSeconds (2);	// Waits 2 seconds
-		SceneManager.LoadScene (2);				// Loads main scene
+
+	//	Advertisement.Show();
+
+		SceneManager.LoadScene (2);				// Loads Game over scene
 	}
 
 
