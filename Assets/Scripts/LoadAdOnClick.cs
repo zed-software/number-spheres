@@ -14,11 +14,14 @@ public class LoadAdOnClick : MonoBehaviour
 
 	public void ShowRewardedVideo ()
 	{
-		ShowOptions options = new ShowOptions();
-		options.resultCallback = HandleShowResult;
+		if (Advertisement.IsReady ("video")) 
+		{
+			ShowOptions options = new ShowOptions ();
+			options.resultCallback = HandleShowResult;
 
-		//Advertisement.Show("rewardedVideo", options);
-		Advertisement.Show("video", options);
+			//Advertisement.Show("rewardedVideo", options);
+			Advertisement.Show ("video", options);
+		}
 	}
 
 	void HandleShowResult (ShowResult result)
