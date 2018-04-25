@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour {
 	private float scoreStopTime;		// Used to for the stopwatch between correct clicks that measures the speed bonus
 	private float scoreSpeedBonus;		// Used to multiply the score earned by the speed of the player getting answers correct 
 	private GameObject[] ballzObjects;	// An array holding the instantiated mathballz
-	private int valueAssignedOrder;		// Used to keep track of which value has been assigned to a ball, set to 0 right before all the ballz spawn
+	private int valueAssignedOrder;		// Used to keep track of which value has been assigned to a ball, set to 0 right beffffore all the ballz spawn
 	private int[] ballValues;			// An array of all the ball values, first value is the correct one
 	private float totalScore;			// Total player score
 	private float score;				// Score * combo * time
@@ -63,13 +63,14 @@ public class GameController : MonoBehaviour {
 	private bool noBallz;				// Bool used to check if there are any ballz in the gameworld
 	private int level;					// Keeps track of the level
 	private LevelController lc;			// Used to call the LevelController script
+//	private HighScore hs;
 	private int levelProgressClicks;	// Used to keep track of how many clicks have been correct on current level
 	private int health;					// Used to keep track of current health
 	private Text levelText;				// Level transition text
 	private bool transitioningLevel;	// Used to stop timer and ballspawnz while the level transition card is up
-	private float timeToAnswerInitial;
-	private float timeToAnswerTotal;
-	private int timeToAnswerIncrement;
+//	private float timeToAnswerInitial;
+//	private float timeToAnswerTotal;
+//	private int timeToAnswerIncrement;
 	private bool isShielded;			// Bool to keep track of the shield power up
 	private bool isDoublePoints;		// Bool used to keep track of the double points power up
 	private bool isFrozen;
@@ -90,16 +91,18 @@ public class GameController : MonoBehaviour {
 		// Set to first level
 		level = 1;				
 		lc = GetComponent<LevelController> ();
-		lc.SetLevel (level);	
+		lc.SetLevel (level);
+
+//		hs = GetComponent<HighScore> ();
 
 		gameOver = false;
 		noBallz = true;
 		isShielded = false;
 		isFrozen = false;
 
-		timeToAnswerIncrement = 0;
-		timeToAnswerInitial = 0;
-		timeToAnswerTotal = 0;
+//		timeToAnswerIncrement = 0;
+//		timeToAnswerInitial = 0;
+//		timeToAnswerTotal = 0;
 
 
 		ResetScore();			// Sets score to 0
@@ -303,9 +306,10 @@ public class GameController : MonoBehaviour {
 			Destroy (ballzObjects [x].gameObject);
 		}
 
-		if (gameOver == false) {
-			timeToAnswerInitial = Time.time;
-		}
+//		4/25/2018 disabling Time to Answer code
+//		if (gameOver == false) {
+//			timeToAnswerInitial = Time.time;
+//		}
 
 		noBallz = true; // Indicates that all the ballz have been deleted
 	}
@@ -493,8 +497,13 @@ public class GameController : MonoBehaviour {
 		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
 		ResetBallz();		
 
+
 		PlayerPrefs.SetFloat ("Score", Mathf.Round(totalScore)); // Saves the score to a settings file for the game over screen
-		PlayerPrefs.SetFloat ("TimeToAnswer", timeToAnswerTotal / timeToAnswerIncrement);
+//		hs.SetScore(score);
+
+//		4/25/18 Disabling TimeToAnswer code
+//		PlayerPrefs.SetFloat ("TimeToAnswer", timeToAnswerTotal / timeToAnswerIncrement);
+
 		StartCoroutine ("WaitForGameOver");		// Coroutine that will wait a little before loading game over screen, no waiting makes the transition too abrupt
 	}
 
@@ -503,7 +512,7 @@ public class GameController : MonoBehaviour {
 	IEnumerator WaitForGameOver()
 	{
 		yield return new WaitForSeconds (2);	// Waits 2 seconds
-
+	//	hs.SetScore(totalScore);
 	//	Advertisement.Show();
 
 		SceneManager.LoadScene (2);				// Loads Game over scene
@@ -577,12 +586,13 @@ public class GameController : MonoBehaviour {
 	}
 
 
-	public void TimeToAnswer()
+	//4/25/18 disabling TTA code
+/*	public void TimeToAnswer()
 	{
 		timeToAnswerTotal += Time.time - timeToAnswerInitial;
 		timeToAnswerIncrement++;
 	}
-
+*/
 
 	// Public function called by power up ball controller
 	// Sets the timer and text for the double points power up affect
