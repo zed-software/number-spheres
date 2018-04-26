@@ -9,6 +9,7 @@ public class LevelController : MonoBehaviour {
 	private int [] allValues;			// Array of the correct and incorrect values, correct is the first value
 	private GameController gc;			// Connects to the GameController script
 	private int level;					// Used to generate a problem based on this variable
+	private int challenge = 7;
 	private Vector2 answerRange;		// Vector 2 that will hold the range of possible answers for each level
 	private int min = 2, max = 10; 		// The minimum and mazimum values for the problem variables
 
@@ -49,7 +50,12 @@ public class LevelController : MonoBehaviour {
 
 		if (level >= 5) // If level 5 is reached, a random level is picked from the switch statement below
 		{
-			levelSwitch = Random.Range (1, 5); // 5 as the max random range becuase max is apparantly exclusive in Random.Range for ints
+//			if (level == challenge)
+//			{
+//				levelSwitch = 5;
+//			}
+//			else
+				levelSwitch = Random.Range (1, 5); // 5 as the max random range becuase max is apparantly exclusive in Random.Range for ints
 		}
 
 		// Switch statement for the different level problem generations
