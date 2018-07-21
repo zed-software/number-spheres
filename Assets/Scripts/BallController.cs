@@ -19,6 +19,7 @@ public class BallController : MonoBehaviour {
 	private TextMesh tm;						// Number text on top of the mathball
 	private int value;							// The assigned value of the mathball
 	private int isCorrect;						// 0 if incorrect value was assigned, 1 if correct
+	private Animator anime;
 
 
 	void Start () 
@@ -29,6 +30,8 @@ public class BallController : MonoBehaviour {
 		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to our local variable
 
 		rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to our local variable
+
+		anime = GetComponentInChildren<Animator> ();
 
 		SetValue (); // Gets number value assigned to it from the gamecontroller 
 		Push (); // Pushes the ball in a random direction
@@ -113,12 +116,14 @@ public class BallController : MonoBehaviour {
 			bst = Instantiate (ballScoreText, transform.position, Quaternion.identity);
 			bst.GetComponent<TextMesh> ().text = ("+" + Mathf.Round(gc.GetBallScore ()).ToString());
 //			gc.TimeToAnswer ();
+			anime.SetBool("isAscend",true);
 			gc.ResetBallz (); 		// If this is the correct mathball, the gamecontroller will reset the game
 		}
 		else
 		{
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
 			gc.LoseHealth();
+			anime.SetBool("isDead",true);
 			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
 		}
 	}

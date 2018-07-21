@@ -223,7 +223,7 @@ public class GameController : MonoBehaviour {
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 
 			ballzObjects[x].GetComponentInChildren<MeshRenderer> ().material = ballMaterials[x];
-			ballzObjects [x].GetComponentInChildren<SpriteRenderer> ().sprite = ballFaces [x];
+			//ballzObjects [x].GetComponentInChildren<SpriteRenderer> ().sprite = ballFaces [x];
 		}
 
 		/////////////////////
