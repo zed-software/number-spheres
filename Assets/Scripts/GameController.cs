@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
 	public Material[] ballMaterials;
 	public Material[] backgroundMaterials;
 	public Sprite[] ballFaces;
+	public RuntimeAnimatorController[] animeBallFaces;
 	public GameObject backGround;
 	public GameObject levelTransition;	// Level transition image and text
 	public GameObject speedBonus;		// UI element for the speed bonus
@@ -200,7 +201,8 @@ public class GameController : MonoBehaviour {
 	void SpawnBallz()
 	{
 		ShuffleArray (ballMaterials);		// Randomizes the array of ball color materials
-		ShuffleArray (ballFaces);			// Randomizes the array of ball faces
+//		ShuffleArray (ballFaces);			// Randomizes the array of ball faces
+		ShuffleArray (animeBallFaces);
 
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
@@ -224,6 +226,7 @@ public class GameController : MonoBehaviour {
 
 			ballzObjects[x].GetComponentInChildren<MeshRenderer> ().material = ballMaterials[x];
 			//ballzObjects [x].GetComponentInChildren<SpriteRenderer> ().sprite = ballFaces [x];
+			ballzObjects[x].GetComponentInChildren<Animator> ().runtimeAnimatorController = animeBallFaces[x];
 		}
 
 		/////////////////////
@@ -312,6 +315,10 @@ public class GameController : MonoBehaviour {
 //		}
 
 		noBallz = true; // Indicates that all the ballz have been deleted
+
+
+		if (!transitioningLevel) // If level transition hasn't been initiated, game will wait for animations to play out before spawning more ballz
+			StartCoroutine ("WaitAfterCorrectBall"); // Waits for death animations to play out
 	}
 		
 
@@ -511,7 +518,7 @@ public class GameController : MonoBehaviour {
 	// Waits a little after hitting game over state then loads the game over scene
 	IEnumerator WaitForGameOver()
 	{
-		yield return new WaitForSeconds (2);	// Waits 2 seconds
+		yield return new WaitForSeconds (1);	// Waits 1 seconds
 	//	hs.SetScore(totalScore);
 	//	Advertisement.Show();
 
@@ -527,6 +534,14 @@ public class GameController : MonoBehaviour {
 		TransitionLevel ();
 	}
 
+
+	// Waits a little after hitting a correct ball before more ballz spawn
+	IEnumerator WaitAfterCorrectBall()
+	{
+		transitioningLevel = true;	// Stops timer and ballz from spawning
+		yield return new WaitForSeconds (0.6f);
+		transitioningLevel = false;
+	}
 
 	// Brings up the level transition card then disables it after a few seconds
 	void TransitionLevel ()

@@ -5,14 +5,17 @@ using UnityEngine;
 public class BallController : MonoBehaviour {
 
 	public int speed; 							// Speed of ballz
-	public GameObject explosion_correct;		// The correct explosion prefab goes here
-	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
+//	public GameObject explosion_correct;		// The correct explosion prefab goes here
+//	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
+	public GameObject anime_ascend;
+	public GameObject anime_death;
 	public GameObject ballScoreText;
 	public GameObject frozenIcon;
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
-	private GameObject explosion;				// Will hold this ballz' explosion particle
+//	private GameObject explosion;				// Will hold this ballz' explosion particle
+	private GameObject deathAnime;
 	private GameObject bst;						// Ball score text popup
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
@@ -83,10 +86,15 @@ public class BallController : MonoBehaviour {
 		value = valueArray [0];	
 		isCorrect = valueArray [1];
 
+//		if (isCorrect == 1)
+//			explosion = explosion_correct;
+//		else
+//			explosion = explosion_incorrect;
+
 		if (isCorrect == 1)
-			explosion = explosion_correct;
+			deathAnime = anime_ascend;
 		else
-			explosion = explosion_incorrect;
+			deathAnime = anime_death;
 
 		tm.text = value.ToString(); // Sets the text on the ball to its assigned value
 	}
@@ -116,21 +124,22 @@ public class BallController : MonoBehaviour {
 			bst = Instantiate (ballScoreText, transform.position, Quaternion.identity);
 			bst.GetComponent<TextMesh> ().text = ("+" + Mathf.Round(gc.GetBallScore ()).ToString());
 //			gc.TimeToAnswer ();
-			anime.SetBool("isAscend",true);
+//			anime.SetBool("isAscend",true);
 			gc.ResetBallz (); 		// If this is the correct mathball, the gamecontroller will reset the game
 		}
 		else
 		{
 			gc.ResetCombo ();			// Resets correct answer combo multiplier to 1x
 			gc.LoseHealth();
-			anime.SetBool("isDead",true);
+//			anime.SetBool("isDead",true);
 			Destroy (this.gameObject); 	// If this is an incorrect mathball it just gets destroyed when pressed
 		}
 	}
 
 	public void Explode()
 	{
-		Instantiate (explosion, transform.position, transform.rotation);
+//		Instantiate (explosion, transform.position, transform.rotation);
+		Instantiate (deathAnime, transform.position, Quaternion.identity);
 	}
 
 	public void SetFrozenIcon(bool b)
