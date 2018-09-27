@@ -527,6 +527,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 182e7b74f94fe7649b831a56199fe835, type: 3}
   - {fileID: 21300000, guid: 90cb0dc4d55e13047a073481fc1c2cb8, type: 3}
   - {fileID: 21300000, guid: e73a9df9e07b5394c978e8989ab3d5be, type: 3}
+  animeBallFaces:
+  - {fileID: 9100000, guid: 7a3497e01dd1f4b47b49eec1aab0dd66, type: 2}
+  - {fileID: 9100000, guid: 4d86e1902522d9741958b89455494aee, type: 2}
+  - {fileID: 9100000, guid: cabc663be1e02f44bbd83edfaf8d2139, type: 2}
+  - {fileID: 9100000, guid: 355859d6780d2ec4a980098208521273, type: 2}
+  - {fileID: 9100000, guid: 2dc2cb51ca642c64eab1c3bab6d47211, type: 2}
+  - {fileID: 9100000, guid: 4fdc3b0648622ce4c8da9dfb32f123cf, type: 2}
+  - {fileID: 9100000, guid: b59b386f4057981458fda3ab2814acca, type: 2}
+  - {fileID: 9100000, guid: be9151168886d7f45b25d920537c0663, type: 2}
+  - {fileID: 9100000, guid: c0fd0c6c5b221114195653244fca2b07, type: 2}
+  - {fileID: 9100000, guid: 2399f15eaa90b234e81c21b1f79c5aba, type: 2}
+  - {fileID: 9100000, guid: 6e53d4332f238a54cb12f0b4e2fed9f0, type: 2}
+  - {fileID: 9100000, guid: c036662d2bd308c40a29d59ae844b533, type: 2}
   backGround: {fileID: 1104097158}
   levelTransition: {fileID: 640503489}
   speedBonus: {fileID: 1208119444}
