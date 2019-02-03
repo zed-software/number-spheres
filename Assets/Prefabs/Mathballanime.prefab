@@ -442,6 +442,10 @@ MonoBehaviour:
     type: 2}
   anime_death: {fileID: 1550475096639136, guid: 5af074d73ce0aa34ca0b321cf9c16f5d,
     type: 2}
+  audio_correct: {fileID: 1444289111504142, guid: 947a872a8881d56499a0eac4cce1a01e,
+    type: 2}
+  audio_wrong: {fileID: 1588635247134098, guid: 40d4a1c6d41de1b449c582ac4d335468,
+    type: 2}
   ballScoreText: {fileID: 1748070356815664, guid: dba6399e1263d9e4089d507ea0727334,
     type: 2}
   frozenIcon: {fileID: 1349434217232014}

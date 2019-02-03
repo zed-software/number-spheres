@@ -9,6 +9,8 @@ public class BallController : MonoBehaviour {
 //	public GameObject explosion_incorrect;		// Different colored explosion for incorrect answers
 	public GameObject anime_ascend;
 	public GameObject anime_death;
+	public GameObject audio_correct;
+	public GameObject audio_wrong;
 	public GameObject ballScoreText;
 	public GameObject frozenIcon;
 	public int score;							// Score value for the ball
@@ -16,6 +18,7 @@ public class BallController : MonoBehaviour {
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
 //	private GameObject explosion;				// Will hold this ballz' explosion particle
 	private GameObject deathAnime;
+	private GameObject deathAudio;
 	private GameObject bst;						// Ball score text popup
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
@@ -91,10 +94,16 @@ public class BallController : MonoBehaviour {
 //		else
 //			explosion = explosion_incorrect;
 
-		if (isCorrect == 1)
+		if (isCorrect == 1) 
+		{
 			deathAnime = anime_ascend;
-		else
+			deathAudio = audio_correct;
+		} 
+		else 
+		{
 			deathAnime = anime_death;
+			deathAudio = audio_wrong;
+		}
 
 		tm.text = value.ToString(); // Sets the text on the ball to its assigned value
 	}
@@ -140,6 +149,7 @@ public class BallController : MonoBehaviour {
 	{
 //		Instantiate (explosion, transform.position, transform.rotation);
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
+		Instantiate (deathAudio, transform.position, Quaternion.identity);
 	}
 
 	public void SetFrozenIcon(bool b)
