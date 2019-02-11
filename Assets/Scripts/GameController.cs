@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Advertisements;
+//using UnityEngine.Advertisements;
 
 public class GameController : MonoBehaviour {
 
