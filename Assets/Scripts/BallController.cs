@@ -80,7 +80,7 @@ public class BallController : MonoBehaviour {
 	}
 		
 
-	// Calls the game controller to get assigned its correct or incorrect value
+	// Calls the game controller to get assigned its correct or incorrect values
 	void SetValue()
 	{
 		int[] valueArray; // needed cause GetBallValue() returns an array with 2 slots, 1st slot has the number value, second slot tells if its the correct answer to the problem 
@@ -150,6 +150,19 @@ public class BallController : MonoBehaviour {
 //		Instantiate (explosion, transform.position, transform.rotation);
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
 		Instantiate (deathAudio, transform.position, Quaternion.identity);
+	}
+
+	// This function is called by the correct ball, or the game over sequence. Decides if the ballz' death audio is played
+	// gameOver = audio = true
+	public void Explode(bool audio) 
+	{
+		
+		Instantiate (deathAnime, transform.position, Quaternion.identity);
+
+		if (audio && (isCorrect != 1))
+		{
+			Instantiate (deathAudio, transform.position, Quaternion.identity);
+		}
 	}
 
 	public void SetFrozenIcon(bool b)

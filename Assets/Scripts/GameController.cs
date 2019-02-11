@@ -202,7 +202,7 @@ public class GameController : MonoBehaviour {
 	{
 		ShuffleArray (ballMaterials);		// Randomizes the array of ball color materials
 //		ShuffleArray (ballFaces);			// Randomizes the array of ball faces
-		ShuffleArray (animeBallFaces);
+		ShuffleArray (animeBallFaces);		// Randomizes the array of ball face animations
 
 		StartWatch ();						// Stop watch sets its starting time whenever the ball wave is spawned, this is used for the speed bonus
 
@@ -303,9 +303,13 @@ public class GameController : MonoBehaviour {
 		//Loops through the array holding our insatiated ballz and destroys them
 		for (int x = 0; x < ballz.Length; x++) 
 		{	
-			if( ballzObjects [x] != null )
-				ballzObjects [x].gameObject.GetComponent<BallController> ().Explode (); // Explodes remaining ballz
-
+			if( ballzObjects [x] != null )// Explodes remaining ballz
+			{
+				if(gameOver)
+					ballzObjects [x].gameObject.GetComponent<BallController> ().Explode (true); 
+				else
+					ballzObjects [x].gameObject.GetComponent<BallController> ().Explode (false);
+			}
 			Destroy (ballzObjects [x].gameObject);
 		}
 
