@@ -100,6 +100,7 @@ public class GameController : MonoBehaviour {
 		noBallz = true;
 		isShielded = false;
 		isFrozen = false;
+		isDoublePoints = false;
 
 //		timeToAnswerIncrement = 0;
 //		timeToAnswerInitial = 0;
@@ -111,7 +112,7 @@ public class GameController : MonoBehaviour {
 		ResetCombo();			// Sets the starting combo to 1x
 		ResetHealth();
 
-		DisableDoublePoints ();
+		//DisableDoublePoints ();
 
 		timer = timerValue;		// Sets the timer to its starting value
 		timerSlider.maxValue = timerValue;
@@ -247,7 +248,7 @@ public class GameController : MonoBehaviour {
 			Debug.Log ("Random Seed: " + randomPowerUpSeed);
 
 			// 20% chance of spawning a power up
-			if (randomPowerUpSeed > 0.8f)
+			if (randomPowerUpSeed > 0f) //0.8
 			{
 				SpawnPowerUp (1, powerUps.Length);
 			}
@@ -416,10 +417,10 @@ public class GameController : MonoBehaviour {
 	// Public function called by a correct mathball when clicked, adds to the combo bonus until it hits the max
 	public void AddCombo()
 	{
-		comboText.text = ("x" + comboValue);  // Shows how many in a row you have clicked
-
 		if (comboValue < maxCombo)
 			comboValue++;
+		
+		comboText.text = ("x" + comboValue);  // Shows how many in a row you have clicked
 	}
 		
 
@@ -618,7 +619,9 @@ public class GameController : MonoBehaviour {
 	public void EnabelDoublePoints()
 	{
 		doublePointsTimer = 10f;
-		doublePointsText.text = "x2";
+		//doublePointsText.text = "x2";
+		comboText.color = new Color(245.0f/255.0f, 206.0f/255.0f, 0f/255.0f);
+		comboText.text = ("x" + (comboValue*2));
 		isDoublePoints = true;
 	}
 
@@ -626,7 +629,9 @@ public class GameController : MonoBehaviour {
 	// Called once the double points timer hits 0
 	void DisableDoublePoints()
 	{
-		doublePointsText.text = "";
+		//doublePointsText.text = "";
+		comboText.color = Color.white;
+		comboText.text = ("x" + comboValue);
 		isDoublePoints = false;
 	}
 
