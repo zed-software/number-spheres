@@ -248,7 +248,7 @@ public class GameController : MonoBehaviour {
 			Debug.Log ("Random Seed: " + randomPowerUpSeed);
 
 			// 20% chance of spawning a power up
-			if (randomPowerUpSeed > 0f) //0.8
+			if (randomPowerUpSeed > 0.8f) //0.8 Default
 			{
 				SpawnPowerUp (1, powerUps.Length);
 			}
