@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
 	public GameObject speedBonus;		// UI element for the speed bonus
 	public GameObject speedBonusScoreText;
 	public GameObject shieldIcon;		// UI icon of shield
+	public GameObject Music;
 	[Tooltip("x and y range of ball spawning zone, should be set according to boundry size")]
 //	public Vector2 spawnValue;			// x and y range of ball spawning zone, should be set according to boundry size
 	public Text problemText;			// Text that displays the problem to the user
@@ -76,6 +77,7 @@ public class GameController : MonoBehaviour {
 	private bool isDoublePoints;		// Bool used to keep track of the double points power up
 	private bool isFrozen;
 	private Vector2 spawnValue;
+	private AudioSource musicAudioSource;
 
 
 	void Start () 
@@ -88,6 +90,14 @@ public class GameController : MonoBehaviour {
 		spawnValue = new Vector2 (spawnWidth, spawnHeight);
 
 		bonusTime = 0;
+
+		musicAudioSource = Music.GetComponent <AudioSource> ();
+
+		if (PlayerPrefs.GetInt ("isMuteMusic") == 1) 
+		{
+			musicAudioSource.volume = 0;
+		}
+
 
 		// Set to first level
 		level = 1;				

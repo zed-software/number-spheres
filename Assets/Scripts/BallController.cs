@@ -149,7 +149,9 @@ public class BallController : MonoBehaviour {
 	{
 //		Instantiate (explosion, transform.position, transform.rotation);
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
-		Instantiate (deathAudio, transform.position, Quaternion.identity);
+
+		if(PlayerPrefs.GetInt("isMuteSoundEffects") == 0)
+			Instantiate (deathAudio, transform.position, Quaternion.identity);
 	}
 
 	// This function is called by the correct ball, or the game over sequence. Decides if the ballz' death audio is played
@@ -159,7 +161,7 @@ public class BallController : MonoBehaviour {
 		
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
 
-		if (audio && (isCorrect != 1))
+		if (audio && (isCorrect != 1) && (PlayerPrefs.GetInt("isMuteSoundEffects") == 0))
 		{
 			Instantiate (deathAudio, transform.position, Quaternion.identity);
 		}

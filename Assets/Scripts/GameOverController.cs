@@ -11,12 +11,20 @@ public class GameOverController : MonoBehaviour {
 
 	public Text scoreText;		// Used to display the total user score after losing
 	public Text highScoreText0, highScoreText1, highScoreText2, highScoreText3, highScoreText4;
+
+	public GameObject MenuAudio;
+
 //	public Text TimetoAnswer; //Displays average time to answer a question
 	private HighScore hs;
+	private AudioSource menuAudioSource;
 
 	// Use this for initialization
 	void Start () 
 	{
+		menuAudioSource = MenuAudio.GetComponent<AudioSource> ();
+
+		if (PlayerPrefs.GetInt ("isMuteSoundEffects") == 1)
+			menuAudioSource.volume = 0;
 		
 		scoreText.text = ("Score: " + PlayerPrefs.GetFloat ("Score")); // Sets the text objest to show the score
 

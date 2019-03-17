@@ -10,6 +10,10 @@ public class MenuController : MonoBehaviour {
 
 	public GameObject MainMenuMusic;
 	public GameObject MenuClickAudio;
+	public GameObject MusicToggleOnButton;
+	public GameObject MusicToggleOffButton;
+	public GameObject AudioToggleOnButton;
+	public GameObject AudioToggleOffButton;
 
 	private int isMuteMusic;
 	private int isMuteSoundEffects;
@@ -41,6 +45,23 @@ public class MenuController : MonoBehaviour {
 		{
 			PlayerPrefs.SetInt ("isMuteSoundEffects", 0);
 			isMuteSoundEffects = PlayerPrefs.GetInt ("isMuteSoundEffects");
+		}
+
+
+		if (isMuteMusic == 1) 
+		{
+			musicAudioSource.volume = 0;
+
+			MusicToggleOffButton.SetActive (false);
+			MusicToggleOnButton.SetActive (true);
+		}
+
+		if (isMuteSoundEffects == 1) 
+		{
+			clickAudioSource.volume = 0;
+
+			AudioToggleOffButton.SetActive (false);
+			AudioToggleOnButton.SetActive (true);
 		}
 
 	}

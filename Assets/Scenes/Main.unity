@@ -548,6 +548,7 @@ MonoBehaviour:
   speedBonusScoreText: {fileID: 1645130186016710, guid: 05863d7c1a243f145ba3e8e5919b17cd,
     type: 2}
   shieldIcon: {fileID: 1757083268}
+  Music: {fileID: 1197068808}
   problemText: {fileID: 587574517}
   comboText: {fileID: 1265841207}
   bonusTimeText: {fileID: 1679463617}
