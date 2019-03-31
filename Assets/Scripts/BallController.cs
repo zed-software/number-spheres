@@ -25,7 +25,7 @@ public class BallController : MonoBehaviour {
 	private TextMesh tm;						// Number text on top of the mathball
 	private int value;							// The assigned value of the mathball
 	private int isCorrect;						// 0 if incorrect value was assigned, 1 if correct
-	private Animator anime;
+	private Animator anime;						// Probably delete
 
 
 	void Start () 

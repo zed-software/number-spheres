@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour {
 					//bonusTimeText.text = ("+ " + Mathf.Round (bonusTime).ToString ());
 				} else
 				{ // No bonus time means the main timer counts down
-					bonusTimeSlider.gameObject.SetActive(false);
+//				 	bonusTimeSlider.gameObject.SetActive(false);
 					timer -= Time.deltaTime;
 					//bonusTimeText.text = ("");
 				}
@@ -694,7 +694,7 @@ public class GameController : MonoBehaviour {
 		bonusTimeSlider.maxValue = bonusTime;
 		bonusTimeSlider.value = bonusTime;
 
-		bonusTimeSlider.gameObject.SetActive (true);
+//		bonusTimeSlider.gameObject.SetActive (true);
 	}
 
 

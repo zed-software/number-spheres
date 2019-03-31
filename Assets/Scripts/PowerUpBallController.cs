@@ -13,6 +13,8 @@ public class PowerUpBallController : MonoBehaviour {
 	private GameController gc;
 	private bool isInBoundry;					// Used to check if the ball should react to collisions yet
 
+	public GameObject particleExplosion;		// Explosion that plays when powerup is touched
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -56,6 +58,8 @@ public class PowerUpBallController : MonoBehaviour {
 	// What it does depends on the type of power up it is, checks the powerUpID
 	public void BallTouched()
 	{
+		Explode ();
+
 		switch (powerUpID)
 		{
 			case 1: // The health ball
@@ -86,6 +90,15 @@ public class PowerUpBallController : MonoBehaviour {
 		}
 
 		Destroy (this.gameObject); // This will probably be changed when there are explosion effects for power ups
+	}
+
+	public void Explode ()
+	{
+		if (PlayerPrefs.GetInt ("isMuteSoundEffects") == 1)
+			particleExplosion.GetComponent<AudioSource> ().playOnAwake = false;
+		
+		Instantiate (particleExplosion, transform.position, transform.rotation);
+
 	}
 
 
