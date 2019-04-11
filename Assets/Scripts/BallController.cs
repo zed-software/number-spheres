@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BallController : MonoBehaviour {
 
@@ -16,12 +17,14 @@ public class BallController : MonoBehaviour {
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
+	private GameObject eventSystemObject;
 //	private GameObject explosion;				// Will hold this ballz' explosion particle
 	private GameObject deathAnime;
 	private GameObject deathAudio;
 	private GameObject bst;						// Ball score text popup
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
+//	private EventSystem es;
 	private TextMesh tm;						// Number text on top of the mathball
 	private int value;							// The assigned value of the mathball
 	private int isCorrect;						// 0 if incorrect value was assigned, 1 if correct
@@ -32,6 +35,8 @@ public class BallController : MonoBehaviour {
 	{
 		gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");// Finds the gamecontroller object
 		gc = gameControllerObject.GetComponent<GameController> (); // sets it to out easy to use local variable
+
+//		eventSystemObject = GameObject.FindGameObjectsWithTag ("EventSystem");
 
 		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to our local variable
 
@@ -117,7 +122,8 @@ public class BallController : MonoBehaviour {
  **/
 	void OnMouseDown()
 	{
-		BallTouched ();		
+		if (!EventSystem.current.IsPointerOverGameObject())
+			BallTouched ();		
 	}
 
 	public void BallTouched()

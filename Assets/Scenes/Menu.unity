@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -446,8 +446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf7ca44a4d2b6f46bf38cabecd376db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenuMusic: {fileID: 930381371}
-  MenuClickAudio: {fileID: 789899577}
+  Music: {fileID: 930381371}
+  ClickAudio: {fileID: 789899577}
   MusicToggleOnButton: {fileID: 1716136500}
   MusicToggleOffButton: {fileID: 1524493409}
   AudioToggleOnButton: {fileID: 647876968}

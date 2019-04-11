@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
  **/
 public class MenuController : MonoBehaviour {
 
-	public GameObject MainMenuMusic;
-	public GameObject MenuClickAudio;
+	public GameObject Music;
+	public GameObject ClickAudio;
 	public GameObject MusicToggleOnButton;
 	public GameObject MusicToggleOffButton;
 	public GameObject AudioToggleOnButton;
@@ -25,10 +25,10 @@ public class MenuController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		musicAudioSource = MainMenuMusic.GetComponent<AudioSource> ();
+		musicAudioSource = Music.GetComponent<AudioSource> ();
 		musicVolume = musicAudioSource.volume;
 
-		clickAudioSource = MenuClickAudio.GetComponent<AudioSource> ();
+		clickAudioSource = ClickAudio.GetComponent<AudioSource> ();
 
 
 		if (PlayerPrefs.HasKey ("isMuteMusic"))
