@@ -234,10 +234,14 @@ public class StatTracker : MonoBehaviour {
 	void percentageCorrect()
 	{
 		percentCorrectOverall = totalQuestions*100 / totalAnswers;
-		percentCorrectAddition = totalQuestionsAddition*100 / totalAnswersAddition;
-		percentCorrectSubtraction = totalQuestionsSubtraction*100 / totalAnswersSubtraction;
-		percentCorrectMultiplication = totalQuestionsMultiplication*100 / totalAnswersMultiplication;
-		percentCorrectDivision = totalQuestionsDivision*100 / totalAnswersDivision;
+		if(totalAnswersAddition != 0)
+			percentCorrectAddition = totalQuestionsAddition*100 / totalAnswersAddition;
+		if (totalAnswersSubtraction  != 0)
+			percentCorrectSubtraction = totalQuestionsSubtraction*100 / totalAnswersSubtraction;
+		if (totalAnswersMultiplication != 0)
+			percentCorrectMultiplication = totalQuestionsMultiplication*100 / totalAnswersMultiplication;
+		if (totalAnswersDivision != 0)
+			percentCorrectDivision = totalQuestionsDivision*100 / totalAnswersDivision;
 		Debug.Log ("Percentage of all answers correct: " + percentCorrectOverall + "%");
 		Debug.Log ("Percentage of addition answers correct: " + percentCorrectAddition + "%");
 		Debug.Log ("Percentage of subtraction answers correct: " + percentCorrectSubtraction + "%");
