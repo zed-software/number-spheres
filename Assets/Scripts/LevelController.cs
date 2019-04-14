@@ -12,12 +12,13 @@ public class LevelController : MonoBehaviour {
 	private int challenge = 7;
 	private Vector2 answerRange;		// Vector 2 that will hold the range of possible answers for each level
 	private int min = 2, max = 10; 		// The minimum and mazimum values for the problem variables
-
+	public static int levelSwitch;
 
 
 	// Use this for initialization
 	void Start () 
 	{
+		levelSwitch = 0;
 		gc = GetComponent<GameController> ();
 	}
 
@@ -44,7 +45,7 @@ public class LevelController : MonoBehaviour {
 	{
 		allValues = new int[length];
 		answerValue = 0;
-		int levelSwitch = level;
+		levelSwitch = level;
 //		int min = 1, max = 10; // The minimum and mazimum values for the problem variables
 		int num1 = 0, num2 = 0;// num3 = 0; // Set to 0 to aviod some error
 

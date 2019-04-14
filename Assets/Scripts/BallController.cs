@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using System;
 
 public class BallController : MonoBehaviour {
 
@@ -17,26 +17,25 @@ public class BallController : MonoBehaviour {
 	public int score;							// Score value for the ball
 
 	private GameObject gameControllerObject;	// Used to get access to the GameController script and its public functions
-	private GameObject eventSystemObject;
 //	private GameObject explosion;				// Will hold this ballz' explosion particle
 	private GameObject deathAnime;
 	private GameObject deathAudio;
 	private GameObject bst;						// Ball score text popup
 	private Rigidbody2D rb;						// Will be set to the ballz rigidbody component
 	private GameController gc;					// Used to easily call the gameController once its set
-//	private EventSystem es;
 	private TextMesh tm;						// Number text on top of the mathball
 	private int value;							// The assigned value of the mathball
 	private int isCorrect;						// 0 if incorrect value was assigned, 1 if correct
-	private Animator anime;						// Probably delete
+	private Animator anime;
+
+
+
 
 
 	void Start () 
 	{
 		gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");// Finds the gamecontroller object
 		gc = gameControllerObject.GetComponent<GameController> (); // sets it to out easy to use local variable
-
-//		eventSystemObject = GameObject.FindGameObjectsWithTag ("EventSystem");
 
 		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to our local variable
 
@@ -78,7 +77,7 @@ public class BallController : MonoBehaviour {
 	void Push()
 	{
 		int range = 100; // Nice even number
-		Vector2 randomVector = new Vector2 (Random.Range(-range, range), Random.Range(-range, range)); // randomVector is used to pick a direction for the initial force on the ball
+		Vector2 randomVector = new Vector2 (UnityEngine.Random.Range(-range, range), UnityEngine.Random.Range(-range, range)); // randomVector is used to pick a direction for the initial force on the ball
 		randomVector.Normalize (); // Sets the x and y values to a magnitude of 1
 
 		rb.AddForce(randomVector * speed); // Pushes the ball in a random direction
@@ -122,8 +121,7 @@ public class BallController : MonoBehaviour {
  **/
 	void OnMouseDown()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject())
-			BallTouched ();		
+		BallTouched ();		
 	}
 
 	public void BallTouched()
@@ -155,9 +153,7 @@ public class BallController : MonoBehaviour {
 	{
 //		Instantiate (explosion, transform.position, transform.rotation);
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
-
-		if(PlayerPrefs.GetInt("isMuteSoundEffects") == 0)
-			Instantiate (deathAudio, transform.position, Quaternion.identity);
+		Instantiate (deathAudio, transform.position, Quaternion.identity);
 	}
 
 	// This function is called by the correct ball, or the game over sequence. Decides if the ballz' death audio is played
@@ -167,7 +163,7 @@ public class BallController : MonoBehaviour {
 		
 		Instantiate (deathAnime, transform.position, Quaternion.identity);
 
-		if (audio && (isCorrect != 1) && (PlayerPrefs.GetInt("isMuteSoundEffects") == 0))
+		if (audio && (isCorrect != 1))
 		{
 			Instantiate (deathAudio, transform.position, Quaternion.identity);
 		}
