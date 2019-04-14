@@ -558,7 +558,7 @@ public class GameController : MonoBehaviour {
 	//	hs.SetScore(totalScore);
 	//	Advertisement.Show();
 
-		SceneManager.LoadScene (2);				// Loads Game over scene
+		SceneManager.LoadScene (3);				// Loads Game over scene
 	}
 
 
