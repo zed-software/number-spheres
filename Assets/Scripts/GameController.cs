@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System;
 //using UnityEngine.Advertisements;
 
 public class GameController : MonoBehaviour {
@@ -47,6 +49,7 @@ public class GameController : MonoBehaviour {
 	public int problemValueRaise;	
 
 //	private GameObject sbst;
+	public static float statTimer;			// Timer for stat tracking purposes
 	private float timer;				// The timer that will count down
 	private float bonusTime;			// Remainding timer after a level up, rolls over to the new timer
 	private float doublePointsTimer;	// Used to keep track of time left for the douple points power up
@@ -76,7 +79,13 @@ public class GameController : MonoBehaviour {
 	private bool isDoublePoints;		// Bool used to keep track of the double points power up
 	private bool isFrozen;
 	private Vector2 spawnValue;
+	StatTracker stats;
 
+
+	public delegate void onBallTouched();
+	public static event onBallTouched goodTouch;
+	public static event onBallTouched badTouch;
+	public static event onBallTouched gameOverTouch;
 
 	void Start () 
 	{
@@ -88,6 +97,8 @@ public class GameController : MonoBehaviour {
 		spawnValue = new Vector2 (spawnWidth, spawnHeight);
 
 		bonusTime = 0;
+		statTimer = 0.0f;
+		stats = new StatTracker ();
 
 		// Set to first level
 		level = 1;				
@@ -131,6 +142,7 @@ public class GameController : MonoBehaviour {
 			// If there is still time left, and if the user hasn't beaten the final level, the game checks if there are any ballz in the game and then spawns them
 			if (timer > 0 && !gameOver)
 			{
+				statTimer += Time.deltaTime;
 
 				// If there is bonus time available, the bonus time counts down instead
 				if (bonusTime > 0)
@@ -221,7 +233,7 @@ public class GameController : MonoBehaviour {
 		// loop that spawns ballz in array
 		for (int x = 0; x < ballz.Length; x++) 
 		{
-			Vector2 spawnLocation = new Vector2 (Random.Range (-spawnValue.x, spawnValue.x), Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
+			Vector2 spawnLocation = new Vector2 (UnityEngine.Random.Range (-spawnValue.x, spawnValue.x), UnityEngine.Random.Range (-spawnValue.y, spawnValue.y)); // Picks random coordinates within specified range
 
 			ballzObjects[x] = (GameObject) Instantiate(ballz [x], spawnLocation, Quaternion.identity); // Quaternion.identity corresponds to "no rotation", used to align object with the world or parent. Quaternions still confuse me
 
@@ -244,8 +256,8 @@ public class GameController : MonoBehaviour {
 
 		if (levelProgressClicks > 0) // Stops power ups from spawning with the first wave of ballz every level, power ups only spawn with correct clicks
 		{
-			float randomPowerUpSeed = Random.value;
-			Debug.Log ("Random Seed: " + randomPowerUpSeed);
+			float randomPowerUpSeed = UnityEngine.Random.value;
+//			Debug.Log ("Random Seed: " + randomPowerUpSeed);
 
 			// 20% chance of spawning a power up
 			if (randomPowerUpSeed > 0.8f) //0.8 Default
@@ -253,7 +265,7 @@ public class GameController : MonoBehaviour {
 				SpawnPowerUp (1, powerUps.Length);
 			}
 
-			randomPowerUpSeed = Random.value; // Reroll for health
+			randomPowerUpSeed = UnityEngine.Random.value; // Reroll for health
 
 			// If health is at 2, 10% chance of health spawning; if health is at 1, 20% chance of health spawning 
 			if ((health == 2 && randomPowerUpSeed > 0.90f) || (health == 1 && randomPowerUpSeed > 0.80f))
@@ -268,10 +280,10 @@ public class GameController : MonoBehaviour {
 	// Parameters are the range within the power ups array that can be chosen
 	void SpawnPowerUp(int rangeMin, int rangeMax)
 	{
-		int powerUpIDRandomSeed = Random.Range (rangeMin, rangeMax);
-		Debug.Log ("Random Power Up: " + powerUpIDRandomSeed);
+		int powerUpIDRandomSeed = UnityEngine.Random.Range (rangeMin, rangeMax);
+//		Debug.Log ("Random Power Up: " + powerUpIDRandomSeed);
 
-		Vector2 spawnLocation = Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
+		Vector2 spawnLocation = UnityEngine.Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
 		Instantiate (powerUps [powerUpIDRandomSeed], spawnLocation, Quaternion.identity);
 	}
 
@@ -301,6 +313,7 @@ public class GameController : MonoBehaviour {
 	// Public function called by the correct mathball once its clicked, destroys the ballz on the screen
 	public void ResetBallz ()
 	{
+		statTimer = 0.0f;
 		//Loops through the array holding our insatiated ballz and destroys them
 		for (int x = 0; x < ballz.Length; x++) 
 		{	
@@ -331,6 +344,8 @@ public class GameController : MonoBehaviour {
 	// Parameter s is the score value assigned to the mathball
 	public void AddScore(int s) 
 	{	
+		if(goodTouch != null)
+			goodTouch();
 		score = (s * comboValue * scoreSpeedBonus);
 
 		if (isDoublePoints)
@@ -420,15 +435,29 @@ public class GameController : MonoBehaviour {
 		if (comboValue < maxCombo)
 			comboValue++;
 		
-		comboText.text = ("x" + comboValue);  // Shows how many in a row you have clicked
+		if (isDoublePoints)
+			comboText.text = ("x" + comboValue * 2);
+		else
+			comboText.text = ("x" + comboValue);  // Shows how many in a row you have clicked
 	}
 		
 
 	// Public function called by an incorrect mathball when clicked, resets the combo bonus to 1x
 	public void ResetCombo()
 	{
-		comboText.text = (""); // Removes combo text from screen
+		if(badTouch != null) 
+			badTouch();
 		comboValue = 1;
+
+		if (isDoublePoints) {
+			comboText.text = ("x" + comboValue * 2);
+		}
+		else
+			comboText.text = (""); // Removes combo text from screen
+
+
+
+			
 	}
 		
 	// Starts the counter for the speed bonus by setting scoreStartTime to the current seconds since game launched
@@ -506,6 +535,8 @@ public class GameController : MonoBehaviour {
 	// Deletes ballz on screen then waits for a second before loading the game over screen with the user's score
 	void GameOver()
 	{
+		if(gameOverTouch != null)
+			gameOverTouch();
 		gameOver = true; 	// Stops more ballz from spawning while waiting for game over scene
 		ResetBallz();		
 
@@ -638,7 +669,7 @@ public class GameController : MonoBehaviour {
 
 	public void EnableFreeze()
 	{
-		Debug.Log ("Enable Freeze");
+//		Debug.Log ("Enable Freeze");
 
 		isFrozen = true;
 		freezeTimer = 10;
@@ -692,7 +723,7 @@ public class GameController : MonoBehaviour {
 	{
 		for (int i = arr.Length - 1; i > 0; i--) 
 		{
-			int r = Random.Range(0, i + 1);
+			int r = UnityEngine.Random.Range(0, i + 1);
 			T tmp = arr[i];
 			arr[i] = arr[r];
 			arr[r] = tmp;

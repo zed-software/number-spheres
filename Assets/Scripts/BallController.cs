@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BallController : MonoBehaviour {
 
@@ -26,6 +27,9 @@ public class BallController : MonoBehaviour {
 	private int value;							// The assigned value of the mathball
 	private int isCorrect;						// 0 if incorrect value was assigned, 1 if correct
 	private Animator anime;
+
+
+
 
 
 	void Start () 
@@ -73,7 +77,7 @@ public class BallController : MonoBehaviour {
 	void Push()
 	{
 		int range = 100; // Nice even number
-		Vector2 randomVector = new Vector2 (Random.Range(-range, range), Random.Range(-range, range)); // randomVector is used to pick a direction for the initial force on the ball
+		Vector2 randomVector = new Vector2 (UnityEngine.Random.Range(-range, range), UnityEngine.Random.Range(-range, range)); // randomVector is used to pick a direction for the initial force on the ball
 		randomVector.Normalize (); // Sets the x and y values to a magnitude of 1
 
 		rb.AddForce(randomVector * speed); // Pushes the ball in a random direction
