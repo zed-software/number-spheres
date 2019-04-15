@@ -268,10 +268,10 @@ public class GameController : MonoBehaviour {
 			randomPowerUpSeed = UnityEngine.Random.value; // Reroll for health
 
 			// If health is at 2, 10% chance of health spawning; if health is at 1, 20% chance of health spawning 
-			if ((health == 2 && randomPowerUpSeed > 0.90f) || (health == 1 && randomPowerUpSeed > 0.80f))
-			{		
-				SpawnPowerUp (0, 0); // First slot in the power ups array is the health ball, so the range here is 0 to 0
-			}
+//			if ((health == 2 && randomPowerUpSeed > 0.90f) || (health == 1 && randomPowerUpSeed > 0.80f))
+//			{		
+//				SpawnPowerUp (0, 0); // First slot in the power ups array is the health ball, so the range here is 0 to 0
+//			}
 		}
 	}
 
@@ -404,11 +404,11 @@ public class GameController : MonoBehaviour {
 
 			// If we have leveled past the first 4, the max range of the generated numbers is increased and a random level is picked, 
 			// this is the game loop from this point on
-			if (level > 4)
-			{
-				lc.RaiseMaxProblemValues (problemValueRaise);
-//				backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [4];
-			} 
+//			if (level > 4)
+//			{
+//				lc.RaiseMaxProblemValues (problemValueRaise);
+////				backGround.GetComponent<MeshRenderer> ().material = backgroundMaterials [4];			//commented if statement out for now
+//			} 
 //			else
 //			{
 //				//Debug.Log ("TEST");
@@ -583,10 +583,13 @@ public class GameController : MonoBehaviour {
 	void TransitionLevel ()
 	{
 		string levelOperator;
+		int levelLooper;
+
+		levelLooper = level % 5;
 
 		transitioningLevel = true; 	// Stops timer and ballz from spawning
 
-		switch (level)
+		switch (levelLooper)
 		{
 			case 1:
 				{
