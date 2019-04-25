@@ -265,7 +265,7 @@ public class GameController : MonoBehaviour {
 				SpawnPowerUp (1, powerUps.Length);
 			}
 
-			randomPowerUpSeed = UnityEngine.Random.value; // Reroll for health
+//			randomPowerUpSeed = UnityEngine.Random.value; // Reroll for health
 
 			// If health is at 2, 10% chance of health spawning; if health is at 1, 20% chance of health spawning 
 //			if ((health == 2 && randomPowerUpSeed > 0.90f) || (health == 1 && randomPowerUpSeed > 0.80f))
@@ -283,7 +283,41 @@ public class GameController : MonoBehaviour {
 		int powerUpIDRandomSeed = UnityEngine.Random.Range (rangeMin, rangeMax);
 //		Debug.Log ("Random Power Up: " + powerUpIDRandomSeed);
 
-		Vector2 spawnLocation = UnityEngine.Random.insideUnitCircle.normalized * 10; // Picks a random location along a circle with radius of 10
+//		Vector2 spawnLocation = UnityEngine.Random.insideUnitCircle.normalized * 13; // Picks a random location along a circle with radius of 13
+
+		float spawnRange = 9.0f;
+		float spawnDistance = 13f;
+
+		Vector2 spawnLocation = new Vector2();
+
+		// Following statement deterimens the direction of spawn location (Right, left, above, below)
+		switch(UnityEngine.Random.Range(1, 5))
+		{
+			case 1: //Spawns to the right of the boundry
+				{
+					spawnLocation = new Vector2(spawnDistance, UnityEngine.Random.Range(-spawnRange, spawnRange));
+					break;
+				}
+			case 2: //Spawns to the left of the boundry
+				{
+					spawnLocation = new Vector2(-spawnDistance, UnityEngine.Random.Range(-spawnRange, spawnRange));
+					break;
+				}
+			case 3: //Spawns to the top of the boundry
+				{
+					spawnLocation = new Vector2(UnityEngine.Random.Range(-spawnRange, spawnRange), spawnDistance);
+					break;
+				}
+			case 4: //Spawns to the bottom of the boundry
+				{
+					spawnLocation = new Vector2(UnityEngine.Random.Range(-spawnRange, spawnRange), -spawnDistance);
+					break;
+				}
+		}
+
+//		float spawnLocationY = UnityEngine.Random.Range(-5.0f, 5.0f);
+//		float spawnLocationX = 13f;
+
 		Instantiate (powerUps [powerUpIDRandomSeed], spawnLocation, Quaternion.identity);
 	}
 
@@ -697,7 +731,7 @@ public class GameController : MonoBehaviour {
 
 	void DisableFreeze()
 	{
-		Debug.Log ("Disable Freeze");
+//		Debug.Log ("Disable Freeze");
 
 		isFrozen = false;
 

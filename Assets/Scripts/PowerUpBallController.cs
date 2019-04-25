@@ -112,14 +112,18 @@ public class PowerUpBallController : MonoBehaviour {
 	// Called when ballz hit other ballz or boundry colliders
 	void OnCollisionEnter2D (Collision2D coll)
 	{
-		Vector2 direction = coll.contacts[0].point - new Vector2 (transform.position.x, transform.position.y); // Calculates angle between the collision point and the object
-		direction = direction.normalized * -1; // Sets the magnitude of the angle to 1 and flips it
+		if(isInBoundry)
+		{
+			Vector2 direction = coll.contacts[0].point - new Vector2 (transform.position.x, transform.position.y); // Calculates angle between the collision point and the object
+			direction = direction.normalized * -1; // Sets the magnitude of the angle to 1 and flips it
 
-		// Sometimes the ballz spawn already colliding with another object and this function is called before Start() can set the rigidbody component, so this checks for that and avoids an error message
-		if(rb == null)
-			rb = GetComponent<Rigidbody2D> ();
+	//		Below commented out because power up ball will always spawn outside of boundry and never colliding with another object
+	//		// Sometimes the ballz spawn already colliding with another object and this function is called before Start() can set the rigidbody component, so this checks for that and avoids an error message
+	//		if(rb == null)
+	//			rb = GetComponent<Rigidbody2D> ();
 
-		rb.AddForce (direction * speed); // Adds force in the new direction, pushing away our ball
+			rb.AddForce (direction * speed); // Adds force in the new direction, pushing away our ball
+		}
 
 	}
 
@@ -129,8 +133,8 @@ public class PowerUpBallController : MonoBehaviour {
 	{
 		if (coll.gameObject.CompareTag("Boundry") && !isInBoundry)
 		{
+			isInBoundry = true; 
 			this.GetComponent<Collider2D> ().isTrigger = false; 
-			isInBoundry = true;
 		}
 	}
 }

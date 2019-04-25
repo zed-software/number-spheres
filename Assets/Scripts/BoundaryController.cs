@@ -7,8 +7,8 @@ public class BoundaryController : MonoBehaviour {
 
 	void Start () 
 	{
-		Debug.Log ("Height: " + Screen.height);
-		Debug.Log ("Width: " + Screen.width);
+//		Debug.Log ("Height: " + Screen.height);
+//		Debug.Log ("Width: " + Screen.width);
 
 		float distanceAdjuster = 1;
 		float uiAdjuster = 1.3f;
@@ -20,10 +20,10 @@ public class BoundaryController : MonoBehaviour {
 		}
 
 		float height = Camera.main.orthographicSize * distanceAdjuster;
-		Debug.Log ("Camera.main.orthographicSize: " + height);
+//		Debug.Log ("Camera.main.orthographicSize: " + height);
 
 		float width = height * Screen.width / Screen.height;
-		Debug.Log ("height * Screen.width / Screen.height: " + width); 
+//		Debug.Log ("height * Screen.width / Screen.height: " + width); 
 
 		transform.localScale = new Vector3 (width, (height - uiAdjuster), 1);
 	}

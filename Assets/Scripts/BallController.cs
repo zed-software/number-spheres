@@ -39,7 +39,8 @@ public class BallController : MonoBehaviour {
 
 		tm = GetComponentInChildren<TextMesh> (); // Setting the number text to our local variable
 
-		rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to our local variable
+		if(rb == null)
+			rb = GetComponent<Rigidbody2D> ();	// Setting the ball rigidbody to our local variable
 
 		anime = GetComponentInChildren<Animator> ();
 
