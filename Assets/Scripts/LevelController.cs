@@ -11,9 +11,13 @@ public class LevelController : MonoBehaviour {
 	private int level;					// Used to generate a problem based on this variable
 	private int challenge = 7;
 	private Vector2 answerRange;		// Vector 2 that will hold the range of possible answers for each level
-	private int min = 2, max = 10; 		// The minimum and mazimum values for the problem variables
 	public static int levelSwitch;
 	private int additionAnswered, subtractionAnswered, multiplicationAnswered, divisionAnswered;
+
+	private int addMin = 2, addMax = 10; 		// The minimum and mazimum values for the addition problem variables
+	private int subMin = 2, subMax = 12; 		// The minimum and mazimum values for the subtraction problem variables
+	private int mulMin = 2, mulMax = 12; 		// The minimum and mazimum values for the multiplication problem variables
+	private int divMin = 2, divMax = 11; 		// The minimum and mazimum values for the division problem variables
 
 
 	// Use this for initialization
@@ -78,33 +82,41 @@ public class LevelController : MonoBehaviour {
 			{
 				while (answerValue == 0)
 				{	
-					min = 2;
-					max = 10;
-					if (additionAnswered < 5) {
-						num1 = Random.Range (min, max);
-						num2 = Random.Range (min, max);
-		
-						answerValue = num1 + num2;
-						answerRange = new Vector2 ((min + min), (max + max));
-						gc.UpdateProblem (num1 + " + " + num2 + " =");
-						additionAnswered++;
+//					min = 2;
+//					max = 10;
+
+					num1 = Random.Range (addMin, addMax);
+					num2 = Random.Range (addMin, addMax);
+	
+					answerValue = num1 + num2;
+					answerRange = new Vector2 ((addMin + addMin), (addMax + addMax));
+
+					gc.UpdateProblem (num1 + " + " + num2 + " =");
+					additionAnswered++;
+
+					if (additionAnswered % 5 == 0) 
+					{		
+						addMin += (additionAnswered - 4);
+						addMax += (additionAnswered - 2);
 					}
 
+//					if (additionAnswered >= 5) {
+//						if (additionAnswered % 5 == 0) {		
+//							min += (additionAnswered - 4);
+//							max += (additionAnswered - 4);
+//						}
+//							
+//						num1 = Random.Range (min, max);
+//						num2 = Random.Range (min, max);
+//
+//						answerValue = num1 + num2;
+//						answerRange = new Vector2 ((min + min), (max + max));
+//						gc.UpdateProblem (num1 + " + " + num2 + " =");
+//						additionAnswered++;
+//					}
 
-					if (additionAnswered >= 5) {
-						if (additionAnswered % 5 == 0) {		
-							min += (additionAnswered - 4);
-							max += (additionAnswered - 4);
-						}
-							
-						num1 = Random.Range (min, max);
-						num2 = Random.Range (min, max);
-
-						answerValue = num1 + num2;
-						answerRange = new Vector2 ((min + min), (max + max));
-						gc.UpdateProblem (num1 + " + " + num2 + " =");
-						additionAnswered++;
-					}
+//					Debug.Log ("additionAnswered = " + additionAnswered);
+//					Debug.Log ("Min = " + addMin + " Max = " + addMax);
 
 				}
 
@@ -112,21 +124,23 @@ public class LevelController : MonoBehaviour {
 			}
 			case 2: // Subtraction
 			{
-				min = 2;
-				max = 12;
+//				subMin = 2;
+//				subMax = 12;
 				while (answerValue == 0)
 				{	
-					num1 = Random.Range (min, max);
-					num2 = Random.Range (min, max);
+					num1 = Random.Range (subMin, subMax);
+					num2 = Random.Range (subMin, subMax);
 
 					if (level >= 5) // Allows negatives for grab bag levels
 					{
 						if (subtractionAnswered % 5 == 0) {		
-							min += (subtractionAnswered - 4);
-							max += (subtractionAnswered - 4);
+							subMin += (subtractionAnswered - 4);
+							subMax += (subtractionAnswered - 4);
 						}
+
 						answerValue = num1 - num2;
-						answerRange = new Vector2 ((min - max), (max - min));
+						answerRange = new Vector2 ((subMin - subMax), (subMax - subMin));
+
 						gc.UpdateProblem (num1 + " - " + num2 + " =");
 						subtractionAnswered++;
 					} 
@@ -144,7 +158,7 @@ public class LevelController : MonoBehaviour {
 							subtractionAnswered++;
 						}
 
-						answerRange = new Vector2 (min, (max - min));
+						answerRange = new Vector2 (subMin, (subMax - subMin));
 					}
 				}
 
@@ -152,31 +166,30 @@ public class LevelController : MonoBehaviour {
 			}
 			case 3: // Multiplication
 			{
-
 				if (multiplicationAnswered < 5) {
-					min = 2;
-					max = 12;
+//					mulMin = 2;
+//					mulMax = 12;
 					while (answerValue == 0) {
-						num1 = Random.Range (min, max);
+						num1 = Random.Range (mulMin, mulMax);
 						num2 = Random.Range (2, 5);
 
 						answerValue = num1 * num2;
-						answerRange = new Vector2 ((min * min), (max * max));
+						answerRange = new Vector2 ((mulMin * mulMin), (mulMax * mulMax));
 						gc.UpdateProblem (num1 + " * " + num2 + " =");
 					}
 					multiplicationAnswered++;
 				}
 
 				if (multiplicationAnswered >= 5) {
-					min = 2 + (multiplicationAnswered / 5);
-					max = 12 + (multiplicationAnswered / 5);
+					mulMin = 2 + (multiplicationAnswered / 5);
+					mulMax = 12 + (multiplicationAnswered / 5);
 					int maxMultiply = 5 + (multiplicationAnswered / 5);
 					while (answerValue == 0) {
-						num1 = Random.Range (min, max);
+						num1 = Random.Range (mulMin, mulMax);
 						num2 = Random.Range (2, maxMultiply);
 
 						answerValue = num1 * num2;
-						answerRange = new Vector2 ((min * min), (max * max));
+						answerRange = new Vector2 ((mulMin * mulMin), (mulMax * mulMax));
 						gc.UpdateProblem (num1 + " * " + num2 + " =");
 					}
 							multiplicationAnswered++;
@@ -200,24 +213,24 @@ public class LevelController : MonoBehaviour {
 			}
 			case 4: // Division
 			{
-				min = 2;
-				max = 11;
+//				divMin = 2;
+//				divMax = 11;
 				int maxDenom = 5; 
 				int minDenom = 2;
 				while (answerValue == 0)
 				{	
 					if (divisionAnswered % 5 == 0) {
 						maxDenom += (divisionAnswered / 5);
-						max+= (divisionAnswered / 5);
-						min += (divisionAnswered / 5);
+						divMax+= (divisionAnswered / 5);
+						divMin += (divisionAnswered / 5);
 					}
-					num1 = Random.Range (min, max); // This number will be used as the answer
+					num1 = Random.Range (divMin, divMax); // This number will be used as the answer
 					num2 = Random.Range (minDenom, maxDenom);	// This will be used as the denominator
 
 					int multipliedVariable = num1 * num2; // Multiplies the 2 randomly generated numbers, this will be used as the numerator
 
 					answerValue = num1;
-					answerRange = new Vector2 (min, max);
+					answerRange = new Vector2 (divMin, divMax);
 					gc.UpdateProblem (multipliedVariable + " / " + num2 + " =");
 					divisionAnswered++;
 
@@ -322,8 +335,8 @@ public class LevelController : MonoBehaviour {
 
 	// Public function called by the GameController when there is a level up past level 4
 	// Raises the maximum range of values generated for the problem and answers
-	public void RaiseMaxProblemValues(int raise)
-	{
-		max += raise;
-	}
+//	public void RaiseMaxProblemValues(int raise)
+//	{
+//		max += raise;
+//	}
 }
