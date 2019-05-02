@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /**
- * This class is used to control the main menu and whatever options it will have
+ * This class was used to controll the main menu but reworked to control the toggle options within both the main menu and the pause screen in the main scene
  **/
 public class MenuController : MonoBehaviour {
 
