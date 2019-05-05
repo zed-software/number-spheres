@@ -8,27 +8,33 @@ public class StatTracker : MonoBehaviour {
 
 	private int streak;
 	private int highStreak;
+
 	float[] timeToAnswer;
 	float[] timeToAnswerAddition;
 	float[] timeToAnswerSubtraction;
 	float[] timeToAnswerMultiplication;
 	float[] timeToAnswerDivision;
+
 	float percentCorrectOverall;
 	float percentCorrectAddition;
 	float percentCorrectSubtraction;
 	float percentCorrectMultiplication;
 	float percentCorrectDivision;
+
 	private int totalAnswers;
 	private int totalQuestions;
+
 	int totalQuestionsAddition;
 	int totalQuestionsSubtraction;
 	int totalQuestionsMultiplication;
 	int totalQuestionsDivision;
+
 	private float averageSessionTime;
 	private float averageSessionTimeAddition;
 	private float averageSessionTimeSubtraction;
 	private float averageSessionTimeMultiplication;
 	private float averageSessionTimeDivision;
+
 	private int totalAnswersAddition;
 	private int totalAnswersSubtraction;
 	private int totalAnswersMultiplication;
@@ -56,7 +62,7 @@ public class StatTracker : MonoBehaviour {
 		totalQuestionsSubtraction = 0;
 		totalQuestionsMultiplication = 0;
 		totalQuestionsDivision = 0;
-		timeToAnswer = new float[100]; //needs to be fixed. you can't dynamically resize arrays in c#. This will break the game if you get to question 201.
+		timeToAnswer = new float[100]; //needs to be fixed. you can't dynamically resize arrays in c#. This will break the game if you get to question 101.
 		timeToAnswerAddition = new float[100];
 		timeToAnswerSubtraction = new float[100];
 		timeToAnswerMultiplication = new float[100];
@@ -216,6 +222,8 @@ public class StatTracker : MonoBehaviour {
 		averageSessionTimeSubtraction = averageTimeToAnswer (timeToAnswerSubtraction, totalQuestionsSubtraction);
 		averageSessionTimeMultiplication = averageTimeToAnswer (timeToAnswerMultiplication, totalQuestionsMultiplication);
 		averageSessionTimeDivision = averageTimeToAnswer (timeToAnswerDivision, totalQuestionsDivision);
+
+
 
 		Debug.Log ("Average time to answer all questions: " + averageSessionTime.ToString("0.00") + "s");
 		Debug.Log ("Average time to answer addition questions: " + averageSessionTimeAddition.ToString("0.00") + "s");
