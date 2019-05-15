@@ -279,7 +279,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 225
   powerUpID: 3
-  particleExplosion: {fileID: 1975182066800442, guid: 18144e2df44f1684ab10be6e39a7f1d4,
+  audio_PowerUpTouched: {fileID: 1975182066800442, guid: 18144e2df44f1684ab10be6e39a7f1d4,
+    type: 2}
+  anime_PowerUpTouched: {fileID: 1846475582118000, guid: dfb94e8ecd4046843920cd053eaf6dca,
     type: 2}
 --- !u!114 &114363327124898046
 MonoBehaviour:
