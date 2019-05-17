@@ -95,8 +95,8 @@ public class HighScore : MonoBehaviour
 
 	private void ShowScores()
 	{
-		for(int x = 0; x < 5; x++)
-			Debug.Log(highScoreList[x]);
+//		for(int x = 0; x < 5; x++)
+//			Debug.Log(highScoreList[x]);
 	}
 
 

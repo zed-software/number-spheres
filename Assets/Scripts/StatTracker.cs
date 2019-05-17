@@ -118,8 +118,8 @@ public class StatTracker : MonoBehaviour {
 			totalQuestionsDivision++;
 			totalAnswersDivision++;
 		}
-		Debug.Log ("Current Streak: " + streak);
-		Debug.Log ("Time to Answer: " + timeToAnswer [totalQuestions - 1] + "s");
+//		Debug.Log ("Current Streak: " + streak);
+//		Debug.Log ("Time to Answer: " + timeToAnswer [totalQuestions - 1] + "s");
 	}
 
 	//this handles everything that happens when an incorrect answer is pressed
@@ -127,7 +127,7 @@ public class StatTracker : MonoBehaviour {
 	{
 		lastOperator = LevelController.levelSwitch;
 		resetStreak ();
-		Debug.Log (streak);
+//		Debug.Log (streak);
 		totalAnswers += 1;
 		if (lastOperator == 1) {
 			totalAnswersAddition++;
@@ -156,7 +156,7 @@ public class StatTracker : MonoBehaviour {
 		{
 			highStreak = streak;
 			PlayerPrefs.SetInt ("highStreak", highStreak);
-			Debug.Log ("New high streak! " + highStreak);
+//			Debug.Log ("New high streak! " + highStreak);
 		}
 		streak = 0;
 	}
