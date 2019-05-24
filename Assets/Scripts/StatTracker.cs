@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StatTracker : MonoBehaviour {
 
 	private int streak;
 	private int highStreak;
+	private int sessionHighStreak;
+
+	public bool newHighScore;
 
 	float[] timeToAnswer;
 	float[] timeToAnswerAddition;
@@ -44,6 +49,9 @@ public class StatTracker : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		PlayerPrefs.SetString ("newHighScore", "false");
+		newHighScore = false;
+		sessionHighStreak = 0;
 		totalAnswers = 0;
 		totalAnswersAddition = 0;
 		totalAnswersSubtraction = 0;
@@ -62,15 +70,15 @@ public class StatTracker : MonoBehaviour {
 		totalQuestionsSubtraction = 0;
 		totalQuestionsMultiplication = 0;
 		totalQuestionsDivision = 0;
-		timeToAnswer = new float[100]; //needs to be fixed. you can't dynamically resize arrays in c#. This will break the game if you get to question 101.
+		timeToAnswer = new float[100]; //needs to be fixed. you can't dynamically resize arrays in c#. This will break the game if you get to question 101. edit: there's resizing built in now but it's still not an elegant solution.
 		timeToAnswerAddition = new float[100];
 		timeToAnswerSubtraction = new float[100];
 		timeToAnswerMultiplication = new float[100];
 		timeToAnswerDivision = new float[100];
-		percentCorrectOverall = 0.0f;
-		percentCorrectAddition = 0.0f;
-		percentCorrectSubtraction = 0.0f;
-		percentCorrectMultiplication = 0.0f;
+		percentCorrectOverall = 0;
+		percentCorrectAddition = 0;
+		percentCorrectSubtraction = 0;
+		percentCorrectMultiplication = 0;
 		percentCorrectDivision = 0.0f;
 		if (PlayerPrefs.HasKey ( "highStreak" ))
 			highStreak = PlayerPrefs.GetInt ( "highStreak" );
@@ -152,9 +160,14 @@ public class StatTracker : MonoBehaviour {
 	//resets your streak and records it if it is a new high streak
 	void resetStreak()
 	{
+		if (streak > sessionHighStreak) {
+			sessionHighStreak = streak;
+			PlayerPrefs.SetInt ("sessionHighStreak", sessionHighStreak);
+		}
 		if (streak > highStreak)
 		{
 			highStreak = streak;
+			PlayerPrefs.SetString ("newHighScore", "true");
 			PlayerPrefs.SetInt ("highStreak", highStreak);
 			Debug.Log ("New high streak! " + highStreak);
 		}
@@ -230,6 +243,14 @@ public class StatTracker : MonoBehaviour {
 		Debug.Log ("Average time to answer: subtraction questions" + averageSessionTimeSubtraction.ToString("0.00") + "s");
 		Debug.Log ("Average time to answer multiplication questions: " + averageSessionTimeMultiplication.ToString("0.00") + "s");
 		Debug.Log ("Average time to answer division questions: " + averageSessionTimeDivision.ToString("0.00") + "s");
+
+		PlayerPrefs.SetString ("addSpeedSession", averageSessionTimeAddition.ToString("0.00") + "s");
+		PlayerPrefs.SetString ("subSpeedSession", averageSessionTimeSubtraction.ToString("0.00") + "s");
+		PlayerPrefs.SetString ("multSpeedSession", averageSessionTimeMultiplication.ToString("0.00") + "s");
+		PlayerPrefs.SetString ("divSpeedSession", averageSessionTimeDivision.ToString("0.00") + "s");
+
+
+
 	}
 
 	//Displays your highest streak in the console. Called at Game Over
@@ -255,6 +276,12 @@ public class StatTracker : MonoBehaviour {
 		Debug.Log ("Percentage of subtraction answers correct: " + percentCorrectSubtraction + "%");
 		Debug.Log ("Percentage of multiplication answers correct: " + percentCorrectMultiplication + "%");
 		Debug.Log ("Percentage of division answers correct: " + percentCorrectDivision + "%");
+
+		PlayerPrefs.SetFloat ("addPctSession", percentCorrectAddition);
+		PlayerPrefs.SetFloat ("subPctSession", percentCorrectSubtraction);
+		PlayerPrefs.SetFloat ("multPctSession", percentCorrectMultiplication);
+		PlayerPrefs.SetFloat ("divPctSession", percentCorrectDivision);
+
 	}
 
 	float averageTimeToAnswer(float[] times, int questionCount)
