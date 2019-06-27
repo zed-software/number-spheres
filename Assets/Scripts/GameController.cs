@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
 	public Text problemText;			// Text that displays the problem to the user
 	public Text comboText;				// Text that displays the combo multiplier
 	public Text bonusTimeText;			// Text that appears when time rolls over to the next level
-	public Text scoreText;				// Text UI for the the score
+	public Text scoreText, scoreTextTransition;			// Text UI for the the score
 	public Text timerText;				// Text UI for the timer
 	public Text doublePointsText;		// Text UI for when the double points power up is active
 	[Tooltip("Timer starting value, reset to this value when level is changed")]
@@ -204,7 +204,7 @@ public class GameController : MonoBehaviour {
 			{ // If the timer runs out or the game is over
 				GameOver ();
 			}
-		}
+		} 
 
 	}
 
@@ -410,6 +410,7 @@ public class GameController : MonoBehaviour {
 	void UpdateScore()
 	{
 		scoreText.text = Mathf.Round(totalScore).ToString();
+		scoreTextTransition.text = scoreText.text;
 	}
 		
 
