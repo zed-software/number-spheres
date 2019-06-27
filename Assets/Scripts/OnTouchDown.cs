@@ -13,13 +13,13 @@ public class OnTouchDown : MonoBehaviour
 	public void TogglePause()
 	{
 		paused = !paused;
-//		Debug.Log (paused.ToString ());
+		Debug.Log ("Touch Pause: " + paused.ToString ());
 	}
 
 	void Update () 
 	{
-		if (!paused)
-		{
+//		if (!paused)
+//		{
 //			Debug.Log ("TOUCH TEST");
 			RaycastHit2D hit = new RaycastHit2D (); 	// Used to hold our hit information 
 			Vector2 wp = new Vector2 ();			// Used to hold the world point of the touch
@@ -33,11 +33,16 @@ public class OnTouchDown : MonoBehaviour
 
 					if (hit.collider != null) // if the ray hit something
 					{
-						hit.collider.gameObject.SendMessage ("TouchBall"); // Tell the ballz' touch collider that it was hit, and that will tell the ball controller it was hit
+						if (!paused)
+						{
+							Debug.Log("Pause touch test");
+							hit.collider.gameObject.SendMessage ("TouchBall"); // Tell the ballz' touch collider that it was hit, and that will tell the ball controller it was hit
+						}
+							
 					}
 				}
 			}
 		}
-	}
+//	}
 }
 #endif
