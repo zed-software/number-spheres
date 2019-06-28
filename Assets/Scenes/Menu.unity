@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6780,6 +6780,46 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
+    - target: {fileID: 2364936936625111680, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936937658136105, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936936543152341, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -183.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936936543152341, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 366.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936937989522174, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -207.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936937989522174, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 317.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936936543152342, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364936937989522175, guid: 85fe44a5b4597bc49b386cb0b82274cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85fe44a5b4597bc49b386cb0b82274cc, type: 3}
 --- !u!1 &1402856239
@@ -7495,7 +7535,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9df02777118338643bc612b2ff16c75d, type: 2}
+  - {fileID: 2100000, guid: e17fed8884910834cb9486800500563d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
