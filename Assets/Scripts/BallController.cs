@@ -120,10 +120,10 @@ public class BallController : MonoBehaviour {
  * 
  * Input detection for if the ballz' collider has been clicked on
  **/
-	 void OnMouseDown()
-	 {
-	 	BallTouched ();		
-	 }
+//	 void OnMouseDown()
+//	 {
+//	 	BallTouched ();		
+//	 }
 
 	public void BallTouched()
 	{
