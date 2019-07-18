@@ -262,7 +262,12 @@ public class StatTracker : MonoBehaviour {
 	//Calculates and displays your percentage for correct answers out of total answers. Could be refactored.
 	void percentageCorrect()
 	{
-		percentCorrectOverall = totalQuestions*100 / totalAnswers;
+		if (totalAnswers == 0)
+			percentCorrectOverall = 0;
+		else
+			percentCorrectOverall = totalQuestions*100 / totalAnswers;
+
+		
 		if(totalAnswersAddition != 0)
 			percentCorrectAddition = totalQuestionsAddition*100 / totalAnswersAddition;
 		if (totalAnswersSubtraction  != 0)
