@@ -120,10 +120,10 @@ public class BallController : MonoBehaviour {
  * 
  * Input detection for if the ballz' collider has been clicked on
  **/
-	// void OnMouseDown()
-	// {
-	// 	BallTouched ();		
-	// }
+//	 void OnMouseDown()
+//	 {
+//	 	BallTouched ();		
+//	 }
 
 	public void BallTouched()
 	{
@@ -134,8 +134,11 @@ public class BallController : MonoBehaviour {
 			gc.AddProgress();		// Counts up how many times a correct ball has been clicked, called before the score is added so the speedbonus can be calculated
 			gc.AddScore (score); 	// The score value is multiplied by the combo and speed here
 			gc.AddCombo ();			// Counts up the amount of correct balls clicked in a row, called afer the score is added so the new multiplier isn't factored in
-
-			bst = Instantiate (ballScoreText, transform.position, Quaternion.identity);
+			
+			Vector3 scorePosition = transform.position;
+			scorePosition.y += 1.37f;
+			scorePosition.z -= 0.1f;
+			bst = Instantiate (ballScoreText, scorePosition, Quaternion.identity);
 			bst.GetComponent<TextMesh> ().text = ("+" + Mathf.Round(gc.GetBallScore ()).ToString());
 //			gc.TimeToAnswer ();
 //			anime.SetBool("isAscend",true);
